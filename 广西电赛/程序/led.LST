@@ -1,0 +1,102 @@
+C51 COMPILER V9.01   LED                                                                   05/26/2012 19:27:58 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN led.OBJ
+COMPILER INVOKED BY: F:\大学\电路\soft\Keil\C51\BIN\C51.EXE led.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #ifndef __LED_H__
+   2          #define __LED_H__
+   3          
+   4          #include "led.h"
+   5          unsigned char ledStatus = 0;
+   6          
+   7          void lightALed() {
+   8   1              switch (ledStatus) {
+   9   2                      case 0: //如果亮一个灯
+  10   2                              led1 = 0;
+  11   2                              ledStatus++;
+  12   2                              break;
+  13   2                      case 1: //如果亮一个灯
+  14   2                              led2 = 0;
+  15   2                              ledStatus++;
+  16   2                              break;
+  17   2                      case 2:
+  18   2                              led3 = 0;
+  19   2                              ledStatus++;
+  20   2                              break;
+  21   2                      case 3:
+  22   2                              led4 = 0;
+  23   2                              ledStatus++;
+  24   2                              break;
+  25   2                      case 4:
+  26   2                              led5 = 0;
+  27   2                              ledStatus++;
+  28   2                              break;
+  29   2                      case 5:
+  30   2                              led6 = 0;
+  31   2                              ledStatus++;
+  32   2                              break;
+  33   2                      case 6:
+  34   2                              led7 = 0;
+  35   2                              ledStatus++;
+  36   2                              break;
+  37   2                      case 7:
+  38   2                              led8 = 0;
+  39   2                              ledStatus++;
+  40   2                              break;
+  41   2              }
+  42   1      }
+  43          
+  44          
+  45          void blowOutALed() {
+  46   1              switch (ledStatus) {
+  47   2                      case 2: //如果亮亮两个灯
+  48   2                              led2 = 1;
+  49   2                              ledStatus--;
+  50   2                              break;
+  51   2                      case 3:
+  52   2                              led3 = 1;
+  53   2                              ledStatus--;
+  54   2                              break;
+  55   2                      case 4:
+C51 COMPILER V9.01   LED                                                                   05/26/2012 19:27:58 PAGE 2   
+
+  56   2                              led4 = 1;
+  57   2                              ledStatus--;
+  58   2                              break;
+  59   2                      case 5:
+  60   2                              led5 = 1;
+  61   2                              ledStatus--;
+  62   2                              break;
+  63   2                      case 6:
+  64   2                              led6 = 1;
+  65   2                              ledStatus--;
+  66   2                              break;
+  67   2                      case 7:
+  68   2                              led7 = 1;
+  69   2                              ledStatus--;
+  70   2                              break;
+  71   2                      case 8:
+  72   2                              led8 = 1;
+  73   2                              ledStatus--;
+  74   2                              break;
+  75   2              }
+  76   1      }
+  77          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    157    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

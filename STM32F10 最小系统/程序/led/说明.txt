@@ -1,0 +1,7 @@
+为了工程体积考虑，删除了库文件。需要使用的时候需要
+1.下载库文件
+2.解压到工程lib目录中
+  如 lib
+       CMSIS
+       STM32F10x_StdPeriph_Driver
+

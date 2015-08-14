@@ -1,0 +1,99 @@
+C51 COMPILER V9.01   用汉譥打个广告                                                        05/09/2012 22:03:55 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE 用汉譥打个广告
+OBJECT MODULE PLACED IN 用汉字打个广告.OBJ
+COMPILER INVOKED BY: F:\大学\电路\soft\Keil\C51\BIN\C51.EXE 用汉字打个广告.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          sbit lcd12864_rs = P1^2;
+   7          sbit lcd12864_rw = P1^1;
+   8          sbit lcd12864_e = P1^0;
+   9          
+  10          uchar name [] = "By  蓝色枫叶";
+  11          uchar qq [] = "QQ:470716740";
+  12          uchar time [] = "2012/02/22 15:48";
+  13          
+  14          
+  15          void delay(unsigned int i) { //实现了0.001秒的延时
+  16   1              
+  17   1              unsigned int x,j;
+  18   1              
+  19   1              for(j=0;j<i;j++) {
+  20   2                      for(x=0;x<=148;x++) {
+  21   3                      }       
+  22   2              }
+  23   1      }
+  24          
+  25          void lcd12864_writeCommand(uchar comm) {
+  26   1              lcd12864_e = 0;
+  27   1              
+  28   1              lcd12864_rs = 0;
+  29   1              lcd12864_rw = 0;
+  30   1              P0 = comm;
+  31   1              lcd12864_e = 1;
+  32   1              delay(5);
+  33   1              
+  34   1              lcd12864_e = 0;
+  35   1              
+  36   1      }
+  37          
+  38          void lcd12864_writeData(uchar data_) {
+  39   1              lcd12864_e = 0;
+  40   1              
+  41   1              lcd12864_rs = 1;
+  42   1              lcd12864_rw = 0;
+  43   1              P0 = data_;
+  44   1              lcd12864_e = 1;
+  45   1              delay(5);
+  46   1              
+  47   1              lcd12864_e = 0;
+  48   1              
+  49   1      }
+  50          
+  51          void lcd12864_init() {
+  52   1              lcd12864_writeCommand(0x30);//设定指令集用基本指令集
+  53   1              lcd12864_writeCommand(0x0c);//打开屏幕显示 (前1位是1后面三位分别表示 整体显示 游标 游标位置)
+  54   1              lcd12864_writeCommand(0x01);//清屏指令，防止前面初始化时出现一些乱码在屏幕上面
+  55   1              lcd12864_writeCommand(0x80);//设置显示地址。也就是屏幕上面的(0,0)点
+C51 COMPILER V9.01   用汉譥打个广告                                                        05/09/2012 22:03:55 PAGE 2   
+
+  56   1      }
+  57          
+  58          void main() {
+  59   1              uchar i;
+  60   1      
+  61   1              lcd12864_init();
+  62   1              for(i = 0; i < 12; i++) {
+  63   2                      lcd12864_writeData(name[i]);
+  64   2              }
+  65   1              lcd12864_writeCommand(0x90);//光标切到第二行
+  66   1              for(i = 0; i <12; i++) {
+  67   2                      lcd12864_writeData(qq[i]);
+  68   2              }
+  69   1              lcd12864_writeCommand(0x88);//光标切到第3行
+  70   1              for(i = 0; i < 16; i++) {
+  71   2                      lcd12864_writeData(time[i]);
+  72   2              }
+  73   1              while(1);
+  74   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    134    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     43    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

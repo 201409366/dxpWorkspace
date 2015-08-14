@@ -1,0 +1,15 @@
+#include "stm32f10x.h"
+
+//led接在了板子上面的PF6,7，8,9
+/*
+在main函数里面用 
+GPIO_SetBits(GPIOF,GPIO_Pin_6);
+GPIO_ResetBits(GPIOF,GPIO_Pin_6);
+两个库函数控制灯的亮灭 
+*/
+#define KEY0 GPIO_ReadInputDataBit(GPIOC,13);   //PC13
+#define KEY1 GPIO_ReadInputDataBit(GPIOA,8);	//PA8
+#define KEY2 GPIO_ReadInputDataBit(GPIOA,0);	//PA0  WK_UP
+	
+void KEY_Init(void);//IO初始化
+u8 KEY_Scan(void);  //按键扫描函数	

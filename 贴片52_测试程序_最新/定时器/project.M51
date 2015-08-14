@@ -1,0 +1,208 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/07/2012  12:14:21  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_51\C51\BIN\BL51.EXE 定时器.obj TO project RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  定时器.obj (定时器)
+  D:\KEIL_51\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL_51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  project (定时器)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000DH     UNIT         ?DT?定时器
+            IDATA   0015H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     0029H     UNIT         ?PR?_DELAY?定时器
+            CODE    00C3H     0027H     UNIT         ?PR?MAIN?定时器
+            CODE    00EAH     001CH     UNIT         ?PR?_WRITEDATA?定时器
+            CODE    0106H     001BH     UNIT         ?PR?INIT?定时器
+            CODE    0121H     0019H     UNIT         ?PR?INCREASE?定时器
+            CODE    013AH     0014H     UNIT         ?C_INITSEG
+            CODE    014EH     0012H     UNIT         ?PR?TEST1?定时器
+            CODE    0160H     000FH     UNIT         ?PR?_WRITECOMMAND?定时器
+
+
+
+OVERLAY MAP OF MODULE:   project (定时器)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?PR?TEST1?定时器
+  +--> ?PR?INCREASE?定时器
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP
+  +--> ?PR?MAIN?定时器
+  +--> ?C_INITSEG
+
+?PR?MAIN?定时器
+  +--> ?PR?INIT?定时器
+  +--> ?PR?_WRITEDATA?定时器
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/07/2012  12:14:21  PAGE 2
+
+
+  +--> ?PR?_DELAY?定时器
+
+?PR?INIT?定时器
+  +--> ?PR?_WRITECOMMAND?定时器
+
+?PR?_WRITECOMMAND?定时器
+  +--> ?PR?_DELAY?定时器
+
+?PR?_WRITEDATA?定时器
+  +--> ?PR?_WRITECOMMAND?定时器
+  +--> ?PR?_DELAY?定时器
+
+
+
+SYMBOL TABLE OF MODULE:  project (定时器)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        定时器
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:00A3H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  B:0090H.0       PUBLIC        lcdenable
+  C:00C3H         PUBLIC        main
+  C:00EAH         PUBLIC        _writeData
+  D:0008H         PUBLIC        count
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0106H         PUBLIC        init
+  D:0009H         PUBLIC        nums
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  C:0121H         PUBLIC        increase
+  D:008AH         PUBLIC        TL0
+  D:0014H         PUBLIC        num
+  B:0088H.4       PUBLIC        TR0
+  B:0090H.2       PUBLIC        lcdRS
+  B:0090H.1       PUBLIC        lcdRW
+  D:00C8H         PUBLIC        T2CON
+  C:0160H         PUBLIC        _writeCommand
+  C:014EH         PUBLIC        test1
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          L?0021
+  -------         ENDPROC       L?0021
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        i
+  -------         DO            
+  D:0002H         SYMBOL        x
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/07/2012  12:14:21  PAGE 3
+
+
+  C:00A3H         LINE#         17
+  C:00A3H         LINE#         21
+  C:00ADH         LINE#         22
+  C:00B0H         LINE#         23
+  C:00BBH         LINE#         24
+  C:00C2H         LINE#         25
+  -------         ENDPROC       _DELAY
+  -------         PROC          _WRITECOMMAND
+  D:0007H         SYMBOL        c
+  C:0160H         LINE#         27
+  C:0160H         LINE#         29
+  C:0162H         LINE#         30
+  C:0164H         LINE#         31
+  C:0166H         LINE#         32
+  C:0166H         LINE#         34
+  C:0166H         LINE#         35
+  C:0169H         LINE#         36
+  C:016BH         LINE#         37
+  C:016EH         LINE#         38
+  -------         ENDPROC       _WRITECOMMAND
+  -------         PROC          _WRITEDATA
+  D:0001H         SYMBOL        d
+  D:0005H         SYMBOL        position
+  C:00EAH         LINE#         40
+  C:00ECH         LINE#         42
+  C:00F0H         LINE#         43
+  C:00F7H         LINE#         44
+  C:00F9H         LINE#         45
+  C:00FBH         LINE#         46
+  C:00FDH         LINE#         47
+  C:00FDH         LINE#         49
+  C:00FDH         LINE#         50
+  C:0100H         LINE#         51
+  C:0102H         LINE#         52
+  C:0105H         LINE#         53
+  -------         ENDPROC       _WRITEDATA
+  -------         PROC          INIT
+  C:0106H         LINE#         55
+  C:0106H         LINE#         57
+  C:0108H         LINE#         58
+  C:010DH         LINE#         59
+  C:0112H         LINE#         60
+  C:0117H         LINE#         61
+  C:011CH         LINE#         62
+  -------         ENDPROC       INIT
+  -------         PROC          MAIN
+  C:00C3H         LINE#         65
+  C:00C3H         LINE#         72
+  C:00C6H         LINE#         73
+  C:00C9H         LINE#         74
+  C:00CCH         LINE#         75
+  C:00CEH         LINE#         76
+  C:00D0H         LINE#         77
+  C:00D2H         LINE#         79
+  C:00D5H         LINE#         81
+  C:00D5H         LINE#         83
+  C:00E1H         LINE#         84
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/07/2012  12:14:21  PAGE 4
+
+
+  C:00E8H         LINE#         85
+  -------         ENDPROC       MAIN
+  -------         PROC          INCREASE
+  C:0121H         LINE#         89
+  C:0121H         LINE#         90
+  C:0123H         LINE#         91
+  C:012AH         LINE#         92
+  C:012CH         LINE#         93
+  C:012FH         LINE#         94
+  C:0136H         LINE#         95
+  C:0139H         LINE#         96
+  C:0139H         LINE#         98
+  -------         ENDPROC       INCREASE
+  -------         PROC          TEST1
+  C:014EH         LINE#         101
+  C:0152H         LINE#         103
+  C:0155H         LINE#         104
+  C:0158H         LINE#         105
+  C:015BH         LINE#         106
+  -------         ENDPROC       TEST1
+  -------         ENDMOD        定时器
+
+Program Size: data=22.0 xdata=0 code=359
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,53 @@
+#include "stm32f10x.h"
+#include "led.h"
+#include "key.c"
+
+int main(void)
+{
+  /*!< At this stage the microcontroller clock setting is already configured, 
+       this is done through SystemInit() function which is called from startup
+       file (startup_stm32f10x_xx.s) before to branch to application main.
+       To reconfigure the default setting of SystemInit() function, refer to
+       system_stm32f10x.c file
+     */     
+  LED_Init();
+  KEY_Init();
+  u8 led0 = 0, led1 = 0, led2 = 0;
+  	
+	while(1) {
+		t = KEY_Scan();//得到键值
+		/**/
+		if(t) {			//判断键值然后点亮相应的灯			   
+			switch(t) {				 
+				case 1:
+					if(led0) {
+						
+						GPIO_ResetBits(GPIOF,GPIO_Pin_6);	
+					}else {
+						GPIO_SetBits(GPIOF,GPIO_Pin_6);
+					}
+					led0 = !led0;
+					break;
+				case 2:
+					if(led1) {
+						GPIO_ResetBits(GPIOF,GPIO_Pin_7);	
+					}else {
+						GPIO_SetBits(GPIOF,GPIO_Pin_7);
+					}
+					led1 = !led1;
+					break;
+				case 3:				
+					if(led2) {
+						GPIO_ResetBits(GPIOF,GPIO_Pin_8);	
+					}else {
+						GPIO_SetBits(GPIOF,GPIO_Pin_8);
+					}
+					led2 = !led2;
+					break;
+			}
+		}
+		else {
+			delay_ms(10); 
+		}
+	}	 
+}

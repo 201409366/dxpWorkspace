@@ -1,0 +1,5 @@
+"key.obj",
+"led.obj",
+"功放控制.obj" 
+TO "功放控制" 
+RAMSIZE(256) 

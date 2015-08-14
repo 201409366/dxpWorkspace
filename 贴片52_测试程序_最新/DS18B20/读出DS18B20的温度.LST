@@ -1,0 +1,178 @@
+C51 COMPILER V9.01   读出DS18B20的蝊度                                                     05/09/2012 21:26:33 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE 读出DS18B20的蝊度
+OBJECT MODULE PLACED IN 读出DS18B20的温度.OBJ
+COMPILER INVOKED BY: F:\大学\电路\soft\Keil\C51\BIN\C51.EXE 读出DS18B20的温度.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>//这个东西里面有_nop_这个函数
+   3          
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6          
+   7          sbit lcdenable = P1^0;
+   8          sbit lcdRS = P1^2;
+   9          sbit lcdRW = P1^1;
+  10          
+  11          sbit DS18B20_DQ = P1^3;
+  12          
+  13          uchar code num [] = "0123456789";
+  14          
+  15          uchar DS18B20_ID [6];
+  16          
+  17          //--------------------------------------DS1602--------------------------
+  18          
+  19          void delay(uint i) { //实现了0.001秒的延时
+  20   1              
+  21   1              uint x,j;
+  22   1              
+  23   1              for(j=0;j<i;j++) {
+  24   2                      for(x=0;x<=148;x++) {
+  25   3                      }       
+  26   2              }
+  27   1      }
+  28          
+  29          void write_command(uchar c) {
+  30   1              //RS = L为写指令状态,RS = H 为写数据状态
+  31   1              lcdRS = 0;       //设置液晶为写命令状态
+  32   1              lcdRW = 0;      //设置为写状态
+  33   1              P0 = c; //送数据
+  34   1              delay(5);  //按照手册,延时一会儿
+  35   1              //给一个高脉冲,让数据有效的被读走
+  36   1              lcdenable = 1; 
+  37   1              delay(5);
+  38   1              lcdenable = 0;
+  39   1      }
+  40          
+  41          void write_data(uchar d,uchar position) {
+  42   1              //RS = L为写指令状态,RS = H 为写数据状态
+  43   1              if(position != -1) //如果没有postion == -1,说明没有设置位置.我没就接着上一次的地址写
+  44   1                      write_command(0x80 + position); 
+  45   1              lcdRS = 1;       //设置液晶为写数据状态
+  46   1              lcdRW = 0;      //设置为写状态
+  47   1              P0 = d; //送数据
+  48   1              delay(5);  //按照手册,延时一会儿
+  49   1              //给一个高脉冲,让数据有效的被读走
+  50   1              lcdenable = 1; 
+  51   1              delay(5);
+  52   1              lcdenable = 0;
+  53   1              
+  54   1      }
+  55          
+C51 COMPILER V9.01   读出DS18B20的蝊度                                                     05/09/2012 21:26:33 PAGE 2   
+
+  56          void init_lcd() {
+  57   1              //初始化总的环境                           
+  58   1              lcdenable = 0;//是液晶能接收信号
+  59   1              write_command(0x38);//设置16x02显示,8位数据口
+  60   1              write_command(0x01);//清楚当前显示的数据
+  61   1              write_command(0x0c);//设置显示:开;光标:显示光标:关;闪烁:关
+  62   1              write_command(0x06);//读写一个字符地址:自动加一;自动滚屏:否  
+  63   1              write_command(0x80);//设置地址为第一个字符处
+  64   1      }
+  65          //--------------------------------DS18B20--------------------------
+  66          
+  67          void flash(uchar i) {
+  68   1              while(-- i);
+  69   1      }
+  70          
+  71          bit ResetDS18B20() {//返回0说明正常
+  72   1              DS18B20_DQ = 1;
+  73   1              DS18B20_DQ = 0;
+  74   1              flash(247);
+  75   1              DS18B20_DQ = 1;
+  76   1              flash(27);
+  77   1              if(DS18B20_DQ == 0) {
+  78   2                      while(DS18B20_DQ == 0);//等待DQ被拉高
+  79   2                      return 0;
+  80   2              }
+  81   1              return 1;
+  82   1              
+  83   1      }
+  84          
+  85          void writeDS18B20(uchar d) {
+  86   1              uchar i = 0;
+  87   1              for(i = 0; i < 8; i ++)
+  88   1                      {
+  89   2                              DS18B20_DQ = 1;
+  90   2                              DS18B20_DQ = 0;
+  91   2                              flash(5);                       
+  92   2                              DS18B20_DQ = d & 0x01;
+  93   2                              flash(20);
+  94   2                              DS18B20_DQ = 1;
+  95   2                              d >>= 1;
+  96   2                      }
+  97   1      }
+  98          
+  99          uchar readDS18B20 () {
+ 100   1              uchar i = 0;   //就一个初始化的问题。。。困扰我这么久。。。。。fuck
+ 101   1              uchar d = 0;
+ 102   1              for(i = 0; i < 8; i ++) {
+ 103   2                      DS18B20_DQ = 1;
+ 104   2                      DS18B20_DQ = 0;
+ 105   2                      flash(1);//7us
+ 106   2                      DS18B20_DQ = 1;
+ 107   2                      flash(1);
+ 108   2                      if(DS18B20_DQ) {//读数据
+ 109   3                              d |= 0x01 << i;
+ 110   3                      }
+ 111   2                      flash(17);//45us
+ 112   2                      DS18B20_DQ = 1;
+ 113   2                      _nop_();
+ 114   2              }
+ 115   1              return d;
+ 116   1      }
+ 117          
+C51 COMPILER V9.01   读出DS18B20的蝊度                                                     05/09/2012 21:26:33 PAGE 3   
+
+ 118          uchar getTemperatur () {
+ 119   1              uchar tempL;
+ 120   1              uchar tempH;
+ 121   1              uchar temperature;//temperature
+ 122   1              
+ 123   1              ResetDS18B20(); //DS18B20复位
+ 124   1              writeDS18B20(0xCC);     //跳过ROM 0xcc
+ 125   1              writeDS18B20(0x44);     //开始温度转换
+ 126   1              ResetDS18B20(); //DS18B20复位
+ 127   1              writeDS18B20(0xCC);             //跳过ROM
+ 128   1              writeDS18B20(0xBE);     //读取温度值.因为温度值在暂存器里面。所以我们读取暂存器里面的东西。
+ 129   1              //因为发了读取指令过去，所以暂存器里面的东西会全部给我们发过来.根据它的结构，
+ 130   1              //我们只要连续读两次
+ 131   1              tempL = readDS18B20();  //先读低8位数据
+ 132   1              tempH = readDS18B20();  //再读高8位数据
+ 133   1              //合成温度数据.可以看存储结构图想到算法
+ 134   1              
+ 135   1              tempL >>= 4;
+ 136   1              tempH <<= 4;
+ 137   1              temperature = tempH | tempL;//得到整数部分
+ 138   1              //温度显示
+ 139   1      
+ 140   1              return temperature;
+ 141   1      }
+ 142          
+ 143          void main() {
+ 144   1              uchar t;
+ 145   1              init_lcd();
+ 146   1              while(1) {
+ 147   2                      t = getTemperatur();
+ 148   2                      write_data(num[t % 10],1);//个位
+ 149   2                      write_data(num[t / 10],0);//十位
+ 150   2              }
+ 151   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    304    ----
+   CONSTANT SIZE    =     11    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

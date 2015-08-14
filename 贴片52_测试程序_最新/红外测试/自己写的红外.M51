@@ -1,0 +1,260 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/10/2012  12:40:01  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+F:\大学\电路\SOFT\KEIL\C51\BIN\BL51.EXE 自己写的红外.obj TO 自己写的红外 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  自己写的红外.obj (自己写的红蚠)
+  F:\大学\电路\SOFT\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  F:\大学\电路\SOFT\KEIL\C51\LIB\C51S.LIB (?C?COPY)
+
+
+LINK MAP OF MODULE:  自己写的红外 (自己写的红蚠)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000FH     UNIT         _DATA_GROUP_
+            DATA    0017H     0004H     UNIT         ?DT?自己写的红蚠
+            IDATA   001BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     000CH     UNIT         ?PR?_WRITE_COMMAND?自己写的红蚠
+                    000FH     0004H                  *** GAP ***
+            CODE    0013H     0003H     ABSOLUTE     
+            CODE    0016H     00F6H     UNIT         ?C?LIB_CODE
+            CODE    010CH     00B3H     UNIT         ?PR?IRHANDLE?自己写的红蚠
+            CODE    01BFH     0031H     UNIT         ?PR?MAIN?自己写的红蚠
+            CODE    01F0H     001FH     UNIT         ?PR?_DELAY_DS1602?自己写的红蚠
+            CODE    020FH     001EH     UNIT         ?CO?自己写的红蚠
+            CODE    022DH     001BH     UNIT         ?PR?INIT_LCD?自己写的红蚠
+            CODE    0248H     0019H     UNIT         ?PR?_WRITE_DATA?自己写的红蚠
+            CODE    0261H     0012H     UNIT         ?PR?_DELAY?自己写的红蚠
+            CODE    0273H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   自己写的红外 (自己写的红蚠)
+
+
+SEGMENT                                   DATA_GROUP 
+  +--> CALLED SEGMENT                   START    LENGTH
+-------------------------------------------------------
+?PR?IRHANDLE?自己写的红蚠               0008H    0002H
+  +--> ?PR?_DELAY?自己写的红蚠
+  +--> ?CO?自己写的红蚠
+  +--> ?PR?_WRITE_DATA?自己写的红蚠
+
+?PR?_WRITE_DATA?自己写的红蚠            -----    -----
+  +--> ?PR?_WRITE_COMMAND?自己写的红蚠
+  +--> ?PR?_DELAY_DS1602?自己写的红蚠
+
+?PR?_WRITE_COMMAND?自己写的红蚠         -----    -----
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/10/2012  12:40:01  PAGE 2
+
+
+  +--> ?PR?_DELAY_DS1602?自己写的红蚠
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP                           -----    -----
+  +--> ?PR?MAIN?自己写的红蚠
+
+?PR?MAIN?自己写的红蚠                   000AH    000DH
+  +--> ?CO?自己写的红蚠
+  +--> ?PR?INIT_LCD?自己写的红蚠
+  +--> ?PR?_WRITE_DATA?自己写的红蚠
+
+?PR?INIT_LCD?自己写的红蚠               -----    -----
+  +--> ?PR?_WRITE_COMMAND?自己写的红蚠
+
+
+
+SYMBOL TABLE OF MODULE:  自己写的红外 (自己写的红蚠)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        自己写的红蚠
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0261H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  B:00B0H.3       PUBLIC        IR
+  D:0017H         PUBLIC        readData
+  B:0090H.0       PUBLIC        lcdenable
+  C:01BFH         PUBLIC        main
+  C:0248H         PUBLIC        _write_data
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0220H         SYMBOL        _?ix1000
+  C:022DH         PUBLIC        init_lcd
+  B:00A0H.3       PUBLIC        buzz
+  B:0088H.0       PUBLIC        IT0
+  B:00A8H.2       PUBLIC        EX1
+  C:020FH         PUBLIC        num
+  C:01F9H         PUBLIC        _delay_DS1602
+  B:0090H.2       PUBLIC        lcdRS
+  B:0090H.1       PUBLIC        lcdRW
+  D:00C8H         PUBLIC        T2CON
+  C:010CH         PUBLIC        IRHandle
+  C:0003H         PUBLIC        _write_command
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          L?0043
+  -------         ENDPROC       L?0043
+  -------         PROC          _DELAY_DS1602
+  D:0006H         SYMBOL        i
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/10/2012  12:40:01  PAGE 3
+
+
+  D:0004H         SYMBOL        x
+  D:0005H         SYMBOL        j
+  -------         ENDDO         
+  C:01F9H         LINE#         17
+  C:01F9H         LINE#         21
+  C:0202H         LINE#         22
+  C:0204H         LINE#         23
+  C:020BH         LINE#         24
+  C:020EH         LINE#         25
+  -------         ENDPROC       _DELAY_DS1602
+  -------         PROC          _WRITE_COMMAND
+  D:0007H         SYMBOL        c
+  C:0003H         LINE#         27
+  C:0003H         LINE#         29
+  C:0005H         LINE#         30
+  C:0007H         LINE#         31
+  C:0009H         LINE#         32
+  C:0009H         LINE#         34
+  C:0009H         LINE#         35
+  C:000CH         LINE#         36
+  C:000EH         LINE#         37
+  -------         ENDPROC       _WRITE_COMMAND
+  -------         PROC          _WRITE_DATA
+  D:0003H         SYMBOL        d
+  D:0005H         SYMBOL        position
+  C:0248H         LINE#         39
+  C:024AH         LINE#         41
+  C:024EH         LINE#         42
+  C:0255H         LINE#         43
+  C:0257H         LINE#         44
+  C:0259H         LINE#         45
+  C:025BH         LINE#         46
+  C:025BH         LINE#         48
+  C:025BH         LINE#         49
+  C:025EH         LINE#         50
+  C:0260H         LINE#         52
+  -------         ENDPROC       _WRITE_DATA
+  -------         PROC          INIT_LCD
+  C:022DH         LINE#         54
+  C:022DH         LINE#         56
+  C:022FH         LINE#         57
+  C:0234H         LINE#         58
+  C:0239H         LINE#         59
+  C:023EH         LINE#         60
+  C:0243H         LINE#         61
+  -------         ENDPROC       INIT_LCD
+  -------         PROC          MAIN
+  -------         DO            
+  D:000AH         SYMBOL        a
+  D:0002H         SYMBOL        i
+  -------         ENDDO         
+  C:01BFH         LINE#         64
+  C:01BFH         LINE#         65
+  C:01D2H         LINE#         68
+  C:01D4H         LINE#         69
+  C:01D6H         LINE#         70
+  C:01D8H         LINE#         71
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/10/2012  12:40:01  PAGE 4
+
+
+  C:01DBH         LINE#         72
+  C:01DDH         LINE#         73
+  C:01EAH         LINE#         74
+  C:01EEH         LINE#         76
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        x
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0261H         LINE#         79
+  C:0261H         LINE#         80
+  C:0261H         LINE#         82
+  C:0267H         LINE#         83
+  C:0267H         LINE#         84
+  C:0272H         LINE#         85
+  C:0272H         LINE#         86
+  -------         ENDPROC       _DELAY
+  -------         PROC          IRHANDLE
+  -------         DO            
+  D:0004H         SYMBOL        j
+  D:0008H         SYMBOL        k
+  D:0009H         SYMBOL        N
+  -------         ENDDO         
+  C:010CH         LINE#         88
+  C:0117H         LINE#         98
+  C:011AH         LINE#         100
+  C:011CH         LINE#         101
+  C:0121H         LINE#         102
+  C:0124H         LINE#         103
+  C:0129H         LINE#         105
+  C:0129H         LINE#         107
+  C:012CH         LINE#         108
+  C:0131H         LINE#         109
+  C:0133H         LINE#         111
+  C:0135H         LINE#         112
+  C:0138H         LINE#         113
+  C:013BH         LINE#         114
+  C:0140H         LINE#         115
+  C:0142H         LINE#         116
+  C:0145H         LINE#         117
+  C:014AH         LINE#         118
+  C:014CH         LINE#         119
+  C:014FH         LINE#         120
+  C:0154H         LINE#         121
+  C:0156H         LINE#         122
+  C:015DH         LINE#         123
+  C:0161H         LINE#         125
+  C:0161H         LINE#         126
+  C:0161H         LINE#         128
+  C:016EH         LINE#         129
+  C:0175H         LINE#         130
+  C:017DH         LINE#         131
+  C:017DH         LINE#         132
+  C:0180H         LINE#         133
+  C:0189H         LINE#         134
+  C:018FH         LINE#         136
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/10/2012  12:40:01  PAGE 5
+
+
+  C:0196H         LINE#         137
+  C:0198H         LINE#         138
+  C:01A7H         LINE#         139
+  C:01B2H         LINE#         141
+  C:01B4H         LINE#         142
+  C:01B4H         LINE#         143
+  C:01B6H         LINE#         144
+  -------         ENDPROC       IRHANDLE
+  -------         ENDMOD        自己写的红蚠
+
+  -------         MODULE        ?C?COPY
+  C:00E6H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+Program Size: data=28.0 xdata=0 code=635
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

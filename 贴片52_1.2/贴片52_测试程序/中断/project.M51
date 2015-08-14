@@ -1,0 +1,179 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/07/2012  12:05:40  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_51\C51\BIN\BL51.EXE ÖÐ¶Ï.obj TO project RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  ÖÐ¶Ï.obj (_Ð¶Ï)
+  D:\KEIL_51\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL_51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  project (_Ð¶Ï)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         _DATA_GROUP_
+            DATA    000AH     0001H     UNIT         ?DT?_Ð¶Ï
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0092H     0050H     UNIT         ?PR?REPEATTION1?_Ð¶Ï
+            CODE    00E2H     004FH     UNIT         ?PR?MAIN?_Ð¶Ï
+            CODE    0131H     0026H     UNIT         ?PR?_DELAY?_Ð¶Ï
+            CODE    0157H     001CH     UNIT         ?PR?TEST1?_Ð¶Ï
+            CODE    0173H     0014H     UNIT         ?PR?FLASH?_Ð¶Ï
+            CODE    0187H     0007H     UNIT         ?PR?BUZZS?_Ð¶Ï
+            CODE    018EH     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   project (_Ð¶Ï)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?_Ð¶Ï
+  +--> ?C_INITSEG
+
+?PR?MAIN?_Ð¶Ï                  0008H    0002H
+  +--> ?PR?REPEATTION1?_Ð¶Ï
+  +--> ?PR?BUZZS?_Ð¶Ï
+  +--> ?PR?_DELAY?_Ð¶Ï
+  +--> ?PR?FLASH?_Ð¶Ï
+
+?PR?REPEATTION1?_Ð¶Ï           -----    -----
+  +--> ?PR?_DELAY?_Ð¶Ï
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/07/2012  12:05:40  PAGE 2
+
+
+?PR?FLASH?_Ð¶Ï                 -----    -----
+  +--> ?PR?_DELAY?_Ð¶Ï
+
+
+
+SYMBOL TABLE OF MODULE:  project (_Ð¶Ï)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        _Ð¶Ï
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0173H         PUBLIC        flash
+  D:00B8H         PUBLIC        IP
+  D:000AH         PUBLIC        noise
+  C:00E2H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0187H         PUBLIC        buzzs
+  B:00A0H.3       PUBLIC        buzz
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:00C8H         PUBLIC        T2CON
+  C:0131H         PUBLIC        _Delay
+  C:0157H         PUBLIC        test1
+  C:0092H         PUBLIC        repeattion1
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0131H         LINE#         8
+  C:0131H         LINE#         11
+  C:0141H         LINE#         12
+  C:0144H         LINE#         13
+  C:014FH         LINE#         14
+  C:0156H         LINE#         16
+  -------         ENDPROC       _DELAY
+  -------         PROC          REPEATTION1
+  -------         DO            
+  D:0082H         SYMBOL        i
+  -------         ENDDO         
+  C:0092H         LINE#         18
+  C:0092H         LINE#         22
+  C:0095H         LINE#         24
+  C:009CH         LINE#         25
+  C:00A9H         LINE#         26
+  C:00B2H         LINE#         27
+  C:00B9H         LINE#         29
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/07/2012  12:05:40  PAGE 3
+
+
+  C:00BEH         LINE#         31
+  C:00CBH         LINE#         32
+  C:00D2H         LINE#         33
+  C:00DBH         LINE#         35
+  -------         ENDPROC       REPEATTION1
+  -------         PROC          FLASH
+  -------         DO            
+  D:0001H         SYMBOL        oldP0_
+  -------         ENDDO         
+  C:0173H         LINE#         38
+  C:0173H         LINE#         39
+  C:0175H         LINE#         41
+  C:0178H         LINE#         42
+  C:017EH         LINE#         43
+  C:0181H         LINE#         44
+  C:0184H         LINE#         46
+  C:0186H         LINE#         47
+  -------         ENDPROC       FLASH
+  -------         PROC          BUZZS
+  C:0187H         LINE#         49
+  C:0187H         LINE#         50
+  C:018BH         LINE#         51
+  C:018DH         LINE#         52
+  C:018DH         LINE#         53
+  -------         ENDPROC       BUZZS
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:00E2H         LINE#         55
+  C:00E2H         LINE#         59
+  C:00E4H         LINE#         60
+  C:00E6H         LINE#         61
+  C:00E8H         LINE#         63
+  C:00E8H         LINE#         64
+  C:00EBH         LINE#         66
+  C:00F0H         LINE#         67
+  C:00F3H         LINE#         68
+  C:00F6H         LINE#         69
+  C:0107H         LINE#         71
+  C:010AH         LINE#         72
+  C:0111H         LINE#         75
+  C:0121H         LINE#         76
+  C:0124H         LINE#         77
+  C:0127H         LINE#         78
+  -------         ENDPROC       MAIN
+  -------         PROC          TEST1
+  C:0157H         LINE#         85
+  C:0160H         LINE#         86
+  C:016CH         LINE#         87
+  -------         ENDPROC       TEST1
+  -------         ENDMOD        _Ð¶Ï
+
+Program Size: data=12.0 xdata=0 code=402
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

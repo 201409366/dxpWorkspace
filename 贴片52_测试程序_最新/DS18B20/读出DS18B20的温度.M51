@@ -1,0 +1,280 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/09/2012  21:26:33  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+F:\大学\电路\SOFT\KEIL\C51\BIN\BL51.EXE 读出DS18B20的温度.obj TO 读出DS18B20的温度 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  读出DS18B20的温度.obj (读出DS18B20的蝊度)
+  F:\大学\电路\SOFT\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  读出DS18B20的温度 (读出DS18B20的蝊度)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?读出DS18B20的蝊度
+            DATA    000EH     0001H     UNIT         _DATA_GROUP_
+            IDATA   000FH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0032H     UNIT         ?PR?READDS18B20?读出DS18B20的蝊度
+            CODE    0035H     002EH     UNIT         ?PR?GETTEMPERATUR?读出DS18B20的蝊度
+            CODE    0063H     0029H     UNIT         ?PR?_DELAY?读出DS18B20的蝊度
+            CODE    008CH     0029H     UNIT         ?PR?MAIN?读出DS18B20的蝊度
+            CODE    00B5H     0021H     UNIT         ?PR?_WRITEDS18B20?读出DS18B20的蝊度
+            CODE    00D6H     001BH     UNIT         ?PR?INIT_LCD?读出DS18B20的蝊度
+            CODE    00F1H     001AH     UNIT         ?PR?RESETDS18B20?读出DS18B20的蝊度
+            CODE    010BH     0019H     UNIT         ?PR?_WRITE_DATA?读出DS18B20的蝊度
+            CODE    0124H     000CH     UNIT         ?PR?_WRITE_COMMAND?读出DS18B20的蝊度
+            CODE    0130H     000CH     UNIT         ?C_C51STARTUP
+            CODE    013CH     000BH     UNIT         ?CO?读出DS18B20的蝊度
+            CODE    0147H     0003H     UNIT         ?PR?_FLASH?读出DS18B20的蝊度
+
+
+
+OVERLAY MAP OF MODULE:   读出DS18B20的温度 (读出DS18B20的蝊度)
+
+
+SEGMENT                                        DATA_GROUP 
+  +--> CALLED SEGMENT                        START    LENGTH
+------------------------------------------------------------
+?C_C51STARTUP                                -----    -----
+  +--> ?PR?MAIN?读出DS18B20的蝊度
+
+?PR?MAIN?读出DS18B20的蝊度                   000EH    0001H
+  +--> ?PR?INIT_LCD?读出DS18B20的蝊度
+  +--> ?PR?GETTEMPERATUR?读出DS18B20的蝊度
+  +--> ?CO?读出DS18B20的蝊度
+  +--> ?PR?_WRITE_DATA?读出DS18B20的蝊度
+
+?PR?INIT_LCD?读出DS18B20的蝊度               -----    -----
+  +--> ?PR?_WRITE_COMMAND?读出DS18B20的蝊度
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/09/2012  21:26:33  PAGE 2
+
+
+
+?PR?_WRITE_COMMAND?读出DS18B20的蝊度         -----    -----
+  +--> ?PR?_DELAY?读出DS18B20的蝊度
+
+?PR?GETTEMPERATUR?读出DS18B20的蝊度          -----    -----
+  +--> ?PR?RESETDS18B20?读出DS18B20的蝊度
+  +--> ?PR?_WRITEDS18B20?读出DS18B20的蝊度
+  +--> ?PR?READDS18B20?读出DS18B20的蝊度
+
+?PR?RESETDS18B20?读出DS18B20的蝊度           -----    -----
+  +--> ?PR?_FLASH?读出DS18B20的蝊度
+
+?PR?_WRITEDS18B20?读出DS18B20的蝊度          -----    -----
+  +--> ?PR?_FLASH?读出DS18B20的蝊度
+
+?PR?READDS18B20?读出DS18B20的蝊度            -----    -----
+  +--> ?PR?_FLASH?读出DS18B20的蝊度
+
+?PR?_WRITE_DATA?读出DS18B20的蝊度            -----    -----
+  +--> ?PR?_WRITE_COMMAND?读出DS18B20的蝊度
+  +--> ?PR?_DELAY?读出DS18B20的蝊度
+
+
+
+SYMBOL TABLE OF MODULE:  读出DS18B20的温度 (读出DS18B20的蝊度)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        读出DS18B20的蝊度
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:0147H         PUBLIC        _flash
+  C:006CH         PUBLIC        _delay
+  D:0008H         PUBLIC        DS18B20_ID
+  D:00B8H         PUBLIC        IP
+  B:0090H.3       PUBLIC        DS18B20_DQ
+  B:0090H.0       PUBLIC        lcdenable
+  C:008CH         PUBLIC        main
+  C:010BH         PUBLIC        _write_data
+  C:00F1H         PUBLIC        ResetDS18B20
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0003H         PUBLIC        readDS18B20
+  C:00D6H         PUBLIC        init_lcd
+  C:013CH         PUBLIC        num
+  C:00B5H         PUBLIC        _writeDS18B20
+  B:0090H.2       PUBLIC        lcdRS
+  B:0090H.1       PUBLIC        lcdRW
+  D:00C8H         PUBLIC        T2CON
+  C:0035H         PUBLIC        getTemperatur
+  C:0124H         PUBLIC        _write_command
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          L?0036
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/09/2012  21:26:33  PAGE 3
+
+
+  -------         ENDPROC       L?0036
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        i
+  -------         DO            
+  D:0002H         SYMBOL        x
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:006CH         LINE#         19
+  C:006CH         LINE#         23
+  C:0076H         LINE#         24
+  C:0079H         LINE#         25
+  C:0084H         LINE#         26
+  C:008BH         LINE#         27
+  -------         ENDPROC       _DELAY
+  -------         PROC          _WRITE_COMMAND
+  D:0007H         SYMBOL        c
+  C:0124H         LINE#         29
+  C:0124H         LINE#         31
+  C:0126H         LINE#         32
+  C:0128H         LINE#         33
+  C:012AH         LINE#         34
+  C:012AH         LINE#         36
+  C:012AH         LINE#         37
+  C:012DH         LINE#         38
+  C:012FH         LINE#         39
+  -------         ENDPROC       _WRITE_COMMAND
+  -------         PROC          _WRITE_DATA
+  D:0001H         SYMBOL        d
+  D:0005H         SYMBOL        position
+  C:010BH         LINE#         41
+  C:010DH         LINE#         43
+  C:0111H         LINE#         44
+  C:0118H         LINE#         45
+  C:011AH         LINE#         46
+  C:011CH         LINE#         47
+  C:011EH         LINE#         48
+  C:011EH         LINE#         50
+  C:011EH         LINE#         51
+  C:0121H         LINE#         52
+  C:0123H         LINE#         54
+  -------         ENDPROC       _WRITE_DATA
+  -------         PROC          INIT_LCD
+  C:00D6H         LINE#         56
+  C:00D6H         LINE#         58
+  C:00D8H         LINE#         59
+  C:00DDH         LINE#         60
+  C:00E2H         LINE#         61
+  C:00E7H         LINE#         62
+  C:00ECH         LINE#         63
+  -------         ENDPROC       INIT_LCD
+  -------         PROC          _FLASH
+  D:0007H         SYMBOL        i
+  C:0147H         LINE#         67
+  C:0147H         LINE#         68
+  C:0149H         LINE#         69
+  -------         ENDPROC       _FLASH
+  -------         PROC          RESETDS18B20
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/09/2012  21:26:33  PAGE 4
+
+
+  C:00F1H         LINE#         71
+  C:00F1H         LINE#         72
+  C:00F3H         LINE#         73
+  C:00F5H         LINE#         74
+  C:00FAH         LINE#         75
+  C:00FCH         LINE#         76
+  C:0101H         LINE#         77
+  C:0104H         LINE#         78
+  C:0107H         LINE#         79
+  C:0109H         LINE#         80
+  C:0109H         LINE#         81
+  C:010AH         LINE#         83
+  -------         ENDPROC       RESETDS18B20
+  -------         PROC          _WRITEDS18B20
+  D:0006H         SYMBOL        d
+  -------         DO            
+  D:0005H         SYMBOL        i
+  -------         ENDDO         
+  C:00B5H         LINE#         85
+  C:00B7H         LINE#         86
+  C:00B9H         LINE#         87
+  C:00B9H         LINE#         88
+  C:00B9H         LINE#         89
+  C:00BBH         LINE#         90
+  C:00BDH         LINE#         91
+  C:00C2H         LINE#         92
+  C:00C6H         LINE#         93
+  C:00CBH         LINE#         94
+  C:00CDH         LINE#         95
+  C:00D1H         LINE#         96
+  C:00D5H         LINE#         97
+  -------         ENDPROC       _WRITEDS18B20
+  -------         PROC          READDS18B20
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0005H         SYMBOL        d
+  -------         ENDDO         
+  C:0003H         LINE#         99
+  C:0003H         LINE#         100
+  C:0005H         LINE#         101
+  C:0006H         LINE#         102
+  C:0006H         LINE#         103
+  C:0008H         LINE#         104
+  C:000AH         LINE#         105
+  C:000FH         LINE#         106
+  C:0011H         LINE#         107
+  C:0016H         LINE#         108
+  C:0019H         LINE#         109
+  C:0026H         LINE#         110
+  C:0026H         LINE#         111
+  C:002BH         LINE#         112
+  C:002DH         LINE#         113
+  C:002EH         LINE#         114
+  C:0032H         LINE#         115
+  C:0034H         LINE#         116
+  -------         ENDPROC       READDS18B20
+  -------         PROC          GETTEMPERATUR
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/09/2012  21:26:33  PAGE 5
+
+
+  -------         DO            
+  D:0004H         SYMBOL        tempL
+  D:0007H         SYMBOL        tempH
+  D:0007H         SYMBOL        temperature
+  -------         ENDDO         
+  C:0035H         LINE#         118
+  C:0035H         LINE#         123
+  C:0038H         LINE#         124
+  C:003DH         LINE#         125
+  C:0042H         LINE#         126
+  C:0045H         LINE#         127
+  C:004AH         LINE#         128
+  C:004FH         LINE#         131
+  C:0054H         LINE#         132
+  C:0057H         LINE#         135
+  C:005CH         LINE#         136
+  C:0060H         LINE#         137
+  C:0062H         LINE#         140
+  C:0062H         LINE#         141
+  -------         ENDPROC       GETTEMPERATUR
+  -------         PROC          MAIN
+  -------         DO            
+  D:000EH         SYMBOL        t
+  -------         ENDDO         
+  C:008CH         LINE#         143
+  C:008CH         LINE#         145
+  C:008FH         LINE#         146
+  C:008FH         LINE#         147
+  C:0094H         LINE#         148
+  C:00A6H         LINE#         149
+  C:00B3H         LINE#         150
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        读出DS18B20的蝊度
+
+Program Size: data=16.0 xdata=0 code=330
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

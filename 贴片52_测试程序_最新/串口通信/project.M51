@@ -1,0 +1,158 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/09/2013  20:18:28  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL\C51\BIN\BL51.EXE 单片机与PC通信.obj TO project RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  单片机与PC通信.obj (单片籣与PC通信)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  project (单片籣与PC通信)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0020H     UNIT         ?PR?_DELAY?单片籣与PC通信
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     001BH     UNIT         ?PR?HANDLER?单片籣与PC通信
+            CODE    0041H     0016H     UNIT         ?PR?INIT?单片籣与PC通信
+            CODE    0057H     0014H     UNIT         ?PR?MAIN?单片籣与PC通信
+            CODE    006BH     000CH     UNIT         ?PR?_SENDDATA?单片籣与PC通信
+            CODE    0077H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   project (单片籣与PC通信)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?单片籣与PC通信
+
+?PR?MAIN?单片籣与PC通信
+  +--> ?PR?INIT?单片籣与PC通信
+  +--> ?PR?_SENDDATA?单片籣与PC通信
+  +--> ?PR?_DELAY?单片籣与PC通信
+
+
+
+SYMBOL TABLE OF MODULE:  project (单片籣与PC通信)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        单片籣与PC通信
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/09/2013  20:18:28  PAGE 2
+
+
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0003H         PUBLIC        _delay
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0057H         PUBLIC        main
+  C:006BH         PUBLIC        _sendData
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0041H         PUBLIC        init
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  C:0026H         PUBLIC        handler
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0003H         LINE#         3
+  C:0003H         LINE#         7
+  C:000DH         LINE#         8
+  C:0010H         LINE#         9
+  C:001BH         LINE#         10
+  C:0022H         LINE#         12
+  -------         ENDPROC       _DELAY
+  -------         PROC          INIT
+  C:0041H         LINE#         14
+  C:0041H         LINE#         17
+  C:0043H         LINE#         18
+  C:0045H         LINE#         19
+  C:0048H         LINE#         21
+  C:004BH         LINE#         22
+  C:004EH         LINE#         24
+  C:0050H         LINE#         25
+  C:0052H         LINE#         28
+  C:0054H         LINE#         29
+  C:0056H         LINE#         30
+  -------         ENDPROC       INIT
+  -------         PROC          _SENDDATA
+  D:0007H         SYMBOL        d
+  C:006BH         LINE#         32
+  C:006BH         LINE#         33
+  C:006DH         LINE#         34
+  C:006FH         LINE#         35
+  C:0072H         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/09/2013  20:18:28  PAGE 3
+
+
+  C:0074H         LINE#         37
+  C:0076H         LINE#         38
+  -------         ENDPROC       _SENDDATA
+  -------         PROC          MAIN
+  -------         DO            
+  D:0001H         SYMBOL        num
+  -------         ENDDO         
+  C:0057H         LINE#         40
+  C:0057H         LINE#         41
+  C:0059H         LINE#         43
+  C:005CH         LINE#         44
+  C:005CH         LINE#         45
+  C:0061H         LINE#         46
+  C:0068H         LINE#         47
+  C:0069H         LINE#         48
+  -------         ENDPROC       MAIN
+  -------         PROC          HANDLER
+  -------         DO            
+  D:0007H         SYMBOL        temp
+  -------         ENDDO         
+  C:0026H         LINE#         51
+  C:002DH         LINE#         55
+  C:002FH         LINE#         56
+  C:0031H         LINE#         57
+  C:0033H         LINE#         58
+  C:0036H         LINE#         59
+  C:0038H         LINE#         60
+  C:003AH         LINE#         61
+  C:003CH         LINE#         62
+  -------         ENDPROC       HANDLER
+  -------         ENDMOD        单片籣与PC通信
+
+Program Size: data=9.0 xdata=0 code=131
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,171 @@
+C51 COMPILER V9.01   自己写的红蚠                                                          05/19/2014 10:39:40 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE 自己写的红蚠
+OBJECT MODULE PLACED IN 自己写的红外.OBJ
+COMPILER INVOKED BY: E:\Keil\C51\BIN\C51.EXE 自己写的红外.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #define uchar unsigned char
+   3          #define  uint unsigned int
+   4          
+   5          uchar readData [4];
+   6          sbit IR = P3^3;
+   7          
+   8          sbit buzz = P2^3;
+   9          
+  10          sbit lcdRS = P1^2;
+  11          sbit lcdRW = P1^1;
+  12          sbit lcdenable = P1^0;
+  13          
+  14          uchar code num [] = "0123456789ABCDEF";
+  15          
+  16          //---------------------1602-------------------
+  17          void delay_DS1602(uint i) { //实现了0.001秒的延时
+  18   1      
+  19   1              uchar x,j;
+  20   1      
+  21   1              for(j=0;j<i;j++) {
+  22   2                      for(x=0;x<=148;x++) {
+  23   3                      }       
+  24   2              }
+  25   1      }
+  26          
+  27          void write_command(uchar c) {
+  28   1              //RS = L为写指令状态,RS = H 为写数据状态
+  29   1              lcdRS = 0;       //设置液晶为写命令状态
+  30   1              lcdRW = 0;      //设置为写状态
+  31   1              P0 = c; //送数据
+  32   1              delay_DS1602(5);  //按照手册,延时一会儿
+  33   1              //给一个高脉冲,让数据有效的被读走
+  34   1              lcdenable = 1; 
+  35   1              delay_DS1602(5);
+  36   1              lcdenable = 0;
+  37   1      }
+  38          
+  39          void write_data(uchar d,uchar position) {
+  40   1              //RS = L为写指令状态,RS = H 为写数据状态
+  41   1              if(position != -1) //如果没有postion == -1,说明没有设置位置.我没就接着上一次的地址写
+  42   1                      write_command(0x80 + position); 
+  43   1              lcdRS = 1;       //设置液晶为写数据状态
+  44   1              lcdRW = 0;      //设置为写状态
+  45   1              P0 = d; //送数据
+  46   1              delay_DS1602(5);  //按照手册,延时一会儿
+  47   1              //给一个高脉冲,让数据有效的被读走
+  48   1              lcdenable = 1; 
+  49   1              delay_DS1602(5);
+  50   1              lcdenable = 0;
+  51   1      
+  52   1      }
+  53          
+  54          void init_lcd() {
+  55   1              //初始化总的环境                           
+C51 COMPILER V9.01   自己写的红蚠                                                          05/19/2014 10:39:40 PAGE 2   
+
+  56   1        lcdenable = 0;//是液晶能接收信号
+  57   1        write_command(0x38);//设置16x02显示,8位数据口
+  58   1        write_command(0x01);//清楚当前显示的数据
+  59   1        write_command(0x0c);//设置显示:开;光标:显示光标:开;闪烁:开
+  60   1        write_command(0x06);//读写一个字符地址:自动加一;自动滚屏:否  
+  61   1        write_command(0x80);//设置地址为第一个字符处
+  62   1      }
+  63                                   
+  64          void main() {
+  65   1              char a[] = "By 470716740";
+  66   1              uchar i;
+  67   1                      
+  68   1              EA = 1;//打开中断总开关
+  69   1              EX1 = 1;//打开外部中断1
+  70   1              IT0 = 0;//当IT0=0时，为电平触发方式(低电平)
+  71   1              init_lcd();
+  72   1              for(i = 0; i < 12; i++) {
+  73   2                      write_data(a[i],i + 3); 
+  74   2              }
+  75   1      
+  76   1              while(1);
+  77   1      }
+  78          
+  79          void delay(unsigned char x)    //x*0.14MS
+  80          {
+  81   1              unsigned char i;
+  82   1              while(x--)
+  83   1              {
+  84   2                      for (i = 0; i<13; i++) {}
+  85   2              }
+  86   1      }
+  87          
+  88          void IRHandle() interrupt 2 using 0{
+  89   1      /*
+  90   1      这个是解析函数，按键的键码被放到了readData[2]里面
+  91   1      
+  92   1      if (readData[2] == ~readData[3]) {       //这里验证是为了保证解码成功
+  93   1              write_data(num[readData[2]/16],0);
+  94   1              write_data(num[readData[2]%16],1);
+  95   1              //这里放的是处理函数
+  96   1      }
+  97   1      */
+  98   1              unsigned char j,k,N=0;
+  99   1      
+ 100   1              EX1 = 0; //关闭外部中断1  
+ 101   1              delay(15);//延时15*0.14MS=2.1ms
+ 102   1              if (IR==1) { //如果此时IR为高说明什么呢？好像是一开始应该是9ms的低电平
+ 103   2                      EX1 =1;//信号没有出现，返回。这次是干扰
+ 104   2                      return;
+ 105   2              } 
+ 106   1                                                 //确认IR信号出现
+ 107   1              while (!IR) {            //等IR变为高电平，跳过9ms的前导低电平信号。
+ 108   2                      delay(1);
+ 109   2              }                                               //延时0.14ms
+ 110   1      
+ 111   1              for (j=0;j<4;j++)  {       //收集四组数据        
+ 112   2                      for (k=0;k<8;k++) {       //每组数据有8位
+ 113   3                              while (IR) {           //等 IR 变为低电平，跳过4.5ms的前导高电平信号。
+ 114   4                                      delay(1);
+ 115   4                              }
+ 116   3                              while (!IR) {         //等 IR 变为高电平
+ 117   4                                      delay(1);
+C51 COMPILER V9.01   自己写的红蚠                                                          05/19/2014 10:39:40 PAGE 3   
+
+ 118   4                              }
+ 119   3                              while (IR) {          //计算IR高电平时长
+ 120   4                                      delay(1);
+ 121   4                                      N++;           
+ 122   4                                      if (N>=30) {//这里会有抖动,所以千万别认为按一次键只解码了一次
+ 123   5                                              EX1=1;
+ 124   5                                              return;
+ 125   5                                      }                  //0.14ms计数过长自动离开。
+ 126   4                              }                        //高电平计数完毕                   
+ 127   3                      //数据处理       
+ 128   3                              readData[j]=readData[j] >> 1; //数据移位
+ 129   3                              if (N>=8) { //8*0.14 = 1.12  如果超过了这个时间，该位为1
+ 130   4                                      readData[j] |= 0x80;
+ 131   4                              }  
+ 132   3                              N=0;
+ 133   3                      }//end for k
+ 134   2              }//end for j
+ 135   1      
+ 136   1              if (readData[2] == ~readData[3]) {       //这里验证是为了保证解码成功
+ 137   2                      buzz = !buzz;
+ 138   2                      write_data(num[readData[2]/16],0);
+ 139   2                      write_data(num[readData[2]%16],1);
+ 140   2                      //这里直接做解码后面的逻辑处理
+ 141   2                      buzz = !buzz;
+ 142   2              }
+ 143   1              EX1 = 1; 
+ 144   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    341    ----
+   CONSTANT SIZE    =     30    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

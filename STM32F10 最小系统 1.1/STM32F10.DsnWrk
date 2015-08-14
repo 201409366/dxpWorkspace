@@ -1,0 +1,6 @@
+[ProjectGroup]
+Version=1.0
+[Project1]
+ProjectPath=STM32F10.PrjPcb
+[Project2]
+ProjectPath=STM32F10_2.PrjPcb

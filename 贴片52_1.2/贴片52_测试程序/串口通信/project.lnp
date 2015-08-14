@@ -1,0 +1,3 @@
+"单片机与PC通信.obj" 
+TO "project" 
+RAMSIZE(256) 

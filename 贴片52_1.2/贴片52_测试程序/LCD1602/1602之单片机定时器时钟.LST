@@ -1,0 +1,365 @@
+C51 COMPILER V9.01   1602_®µ¥Æ¬»_¶¨Ê±Æ÷Ê±_Ó                                                05/09/2012 13:19:54 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE 1602_®µ¥Æ¬»_¶¨Ê±Æ÷Ê±_Ó
+OBJECT MODULE PLACED IN 1602Ö®µ¥Æ¬»ú¶¨Ê±Æ÷Ê±ÖÓ.OBJ
+COMPILER INVOKED BY: F:\´óÑ§\µçÂ·\soft\Keil\C51\BIN\C51.EXE 1602Ö®µ¥Æ¬»ú¶¨Ê±Æ÷Ê±ÖÓ.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          
+   4          #define uint  unsigned int
+   5          #define uchar unsigned char
+   6          
+   7          //-------------1602²¿·Ö------------------------------------------------------------------------
+   8          sbit lcdenable = P1^0;
+   9          sbit lcdRS = P1^2;
+  10          sbit lcdRW = P1^1;
+  11          //-------------Ô­Ê¼²¿·Ö------------------------------------------------------------------------------
+  12           
+  13          //¶¨ÒåÊ±ÖÓÄ£Ê½ÏÔÊ¾µÄÊýÂë¹ÜµÄÏÂ±ê
+  14          uint indexOfMs0 = 0;
+  15          uint indexOfMs1 = 0;
+  16          uint indexOfS0 = 0;
+  17          uint indexOfS1 = 0;
+  18          uint indexOfM0 = 0;
+  19          uint indexOfM1 = 0;
+  20          uint indexOfH0 = 0;
+  21          uint indexOfH1 = 0;
+  22          
+  23          //¶¨Òå¶¨Ê±Ä£Ê½ÏÔÊ¾µÄÊýÂë¹ÜµÄÏÂ±ê
+  24          uint indexOfTimerOfMs0 = 0;
+  25          uint indexOfTimerOfMs1 = 0;
+  26          uint indexOfTimerOfS0 = 0;
+  27          uint indexOfTimerOfS1 = 0;
+  28          uint indexOfTimerOfM0 = 0;
+  29          uint indexOfTimerOfM1 = 0;
+  30          uint indexOfTimerOfH0 = 0;
+  31          uint indexOfTimerOfH1 = 0;
+  32          
+  33          
+  34          //ÓÃÀ´Ê±ÖÓÄ£Ê½¼ÆÊ±ÓÃÁË¶àÉÙÃë
+  35          uchar count = 0;
+  36          //ÓÃÀ´¼ÆÊ±Æ÷Ä£Ê½¼ÆÊ±ÓÃÁË¶àÉÙÃë
+  37          uchar count2 = 0;
+  38          
+  39          
+  40          //ÓÃÀ´¼ÆÊ±µÄ
+  41          uchar temp1 = 0;
+  42          //É¨ÃèÊ±¼ä¼ÆÊ±Æ÷
+  43          uchar temp2 = 0;
+  44          
+  45          //ÓÃÀ´±êÊ¶°´¼üÊÇ·ñ±»°´ÏÂ
+  46          uchar bPress = 0;
+  47          
+  48          //¶¨Òå3¸ö°´¼ü
+  49          sbit key1 = P2^0;
+  50          sbit key2 = P2^1;
+  51          sbit key3 = P2^2;
+  52          
+  53          //¼ÆÊ±Æ÷ ÓÃÀ´ÅÐ¶Ï°´¼ü°´ÏÂµÄÊ±¼äµÄ
+  54          uchar isTimer = 0;
+  55          
+C51 COMPILER V9.01   1602_®µ¥Æ¬»_¶¨Ê±Æ÷Ê±_Ó                                                05/09/2012 13:19:54 PAGE 2   
+
+  56          //±êÊ¶¶¨Ê±Æ÷µÄ¿ªÊ¼Óë½áÊø
+  57          uchar isStarted = 0;
+  58          uchar isStoped = 0;
+  59          
+  60          uchar code initDate [] = "2011-11-11";
+  61          uchar code initTime [] = "00:00:00";
+  62          uchar code numbers [] = "01234567890";
+  63          uchar index;
+  64          
+  65          //ÉùÃ÷°´¼ü´¦Àíº¯Êý
+  66          void keyInterruptHandle();
+  67          void updateLED(uint i0, uint i1, uint i2, uint i3, uint i4, uint i5, uint i6, uint i7);
+  68          
+  69          void delay(uint i) { //ÊµÏÖÁË0.001ÃëµÄÑÓÊ±
+  70   1      
+  71   1              uint x,j;
+  72   1      
+  73   1              for(j=0;j<i;j++) {
+  74   2                      for(x=0;x<=148;x++) {
+  75   3                      }       
+  76   2              }
+  77   1      }
+  78          
+  79          void writeCommand(uchar c) {
+  80   1              //RS = LÎªÐ´Ö¸Áî×´Ì¬,RS = H ÎªÐ´Êý¾Ý×´Ì¬
+  81   1              lcdRS = 0;       //ÉèÖÃÒº¾§ÎªÐ´ÃüÁî×´Ì¬
+  82   1              lcdRW = 0;      //ÉèÖÃÎªÐ´×´Ì¬
+  83   1              P0 = c; //ËÍÊý¾Ý
+  84   1              delay(5);  //°´ÕÕÊÖ²á,ÑÓÊ±Ò»»á¶ù
+  85   1              //¸øÒ»¸ö¸ßÂö³å,ÈÃÊý¾ÝÓÐÐ§µÄ±»¶Á×ß
+  86   1              lcdenable = 1; 
+  87   1              delay(5);
+  88   1              lcdenable = 0;
+  89   1              P0 = 0xff;//¹ØµÆ                                                                
+  90   1      }
+  91          
+  92          void writeData(uchar d,uchar position) {
+  93   1              //RS = LÎªÐ´Ö¸Áî×´Ì¬,RS = H ÎªÐ´Êý¾Ý×´Ì¬
+  94   1              if(position != -1) //Èç¹ûÃ»ÓÐpostion == -1,ËµÃ÷Ã»ÓÐÉèÖÃÎ»ÖÃ.ÎÒÃ»¾Í½Ó×ÅÉÏÒ»´ÎµÄµØÖ·Ð´
+  95   1                      writeCommand(0x80 + position);  
+  96   1              lcdRS = 1;       //ÉèÖÃÒº¾§ÎªÐ´Êý¾Ý×´Ì¬
+  97   1              lcdRW = 0;      //ÉèÖÃÎªÐ´×´Ì¬
+  98   1              P0 = d; //ËÍÊý¾Ý
+  99   1              delay(5);  //°´ÕÕÊÖ²á,ÑÓÊ±Ò»»á¶ù
+ 100   1              //¸øÒ»¸ö¸ßÂö³å,ÈÃÊý¾ÝÓÐÐ§µÄ±»¶Á×ß
+ 101   1              lcdenable = 1; 
+ 102   1              delay(5);
+ 103   1              lcdenable = 0;
+ 104   1              P0 = 0xff;//¹ØµÆ
+ 105   1      }
+ 106          
+ 107          void init() {
+ 108   1              //³õÊ¼»¯×ÜµÄ»·¾³                           
+ 109   1        lcdenable = 0;//ÊÇÒº¾§ÄÜ½ÓÊÕÐÅºÅ
+ 110   1        writeCommand(0x38);//ÉèÖÃ16x02ÏÔÊ¾,8Î»Êý¾Ý¿Ú
+ 111   1        writeCommand(0x01);//Çå³þµ±Ç°ÏÔÊ¾µÄÊý¾Ý
+ 112   1        writeCommand(0x0c);//ÉèÖÃÏÔÊ¾:¿ª;¹â±ê:ÏÔÊ¾¹â±ê:¿ª;ÉÁË¸:¿ª
+ 113   1        writeCommand(0x06);//¶ÁÐ´Ò»¸ö×Ö·ûµØÖ·:×Ô¶¯¼ÓÒ»;×Ô¶¯¹öÆÁ:·ñ  
+ 114   1        writeCommand(0x80);//ÉèÖÃµØÖ·ÎªµÚÒ»¸ö×Ö·û´¦
+ 115   1        //³õÊ¼»¯Ê±ÖÓÏÔÊ¾
+ 116   1        writeCommand(0x80+0x03);
+ 117   1        for(index = 0; index < 10; index++) {
+C51 COMPILER V9.01   1602_®µ¥Æ¬»_¶¨Ê±Æ÷Ê±_Ó                                                05/09/2012 13:19:54 PAGE 3   
+
+ 118   2                 writeData(initDate[index],-1);
+ 119   2        }
+ 120   1      
+ 121   1        writeCommand(0x80+0x40+0x04);
+ 122   1        for(index = 0; index < 8; index++) {
+ 123   2                 writeData(initTime[index],-1);
+ 124   2        }
+ 125   1      
+ 126   1      }
+ 127          
+ 128          
+ 129          void main()      {      
+ 130   1              TMOD = 0x01;
+ 131   1              TH0=(65536-1000)/256;
+ 132   1              TL0=(65536-1000)%256;
+ 133   1              EA=1;//´ò¿ªÖÐ¶Ï×Ü¿ª¹Ø
+ 134   1              ET0=1;//´ò¿ª¶¨Ê±Æ÷ÖÐ¶Ï
+ 135   1              TR0=1;//µÚÒ»¸ö¼ÆÊ±Æ÷¿ªÊ¼¼ÆÊ±
+ 136   1      
+ 137   1         //¸ø°´¼ü¶Ë¿Ú³õÊ¼»¯
+ 138   1         key1 = 1;
+ 139   1         key2 = 1;
+ 140   1         key3 = 1;
+ 141   1         init();
+ 142   1          
+ 143   1              while(1) {
+ 144   2                      //ÓÃÊÓÆµÀïÃæµÄ·½·¨À´¼ì²â°´¼ü¡£Ò²¾ÍÊÇÏû¶¶¡£¡£¡£¡£ÒòÎªÏÖÔÚµÄ°´¼ü´¦Àí»¹²»ÊÇ·Ç³£µÄÍêÃÀ
+ 145   2                      keyInterruptHandle();
+ 146   2      
+ 147   2              }
+ 148   1      
+ 149   1      }
+ 150          
+ 151          //ÄÚ²¿ÖÐ¶Ï0ÖÐ¶Ï´¦Àíº¯Êý
+ 152          void timeInterruptHandle() interrupt 1 {  
+ 153   1              //ÓÃ×îÖ±¹ÛµÄ·½·¨À´ÊµÏÖÎÒÃÇµÄÊ±ÖÓ¹¦ÄÜ£¬ÔÚºóÃæÓÃËã·¨À´ÊµÏÖ¡£ÓÃ³ý60È¡Óà¡£¡£¡£À´ÊµÏÖ
+ 154   1              //µ±Ç°Ê±ÖÓÖÐ¶Ï1ms´¥·¢Ò»´Î
+ 155   1              TH0=(65536-1000)/256;
+ 156   1              TL0=(65536-1000)%256;
+ 157   1              count++;
+ 158   1              if(isTimer) {
+ 159   2                      count2++;
+ 160   2              }
+ 161   1      
+ 162   1              if(count >= 10) { //ÅÐ¶Ï10ms;
+ 163   2                       indexOfMs0++;
+ 164   2                       count = 0;
+ 165   2                       if(indexOfMs0 >= 10) {
+ 166   3                              indexOfMs0 = 0;
+ 167   3                               indexOfMs1++;
+ 168   3                              if(indexOfMs1 >= 10) { //ÅÐ¶ÏÊ±¼ä¶¼Ò»Ãë
+ 169   4                                      indexOfS0++;
+ 170   4                                      indexOfMs1 = 0;
+ 171   4                                      writeData(numbers[indexOfS0],0x40+0x0b);
+ 172   4                                      if(indexOfS0 >= 10) {
+ 173   5                                              indexOfS0 = 0;//µ±ÃëµÚÒ»Î»µ½9ºóÖÃ0
+ 174   5                                              indexOfS1++;//µ±ÃëÎ»µÄµÚÒ»Î»Âú9ºó£¬ÏòµÚ¶þÎ»½øÒ»
+ 175   5                                              writeData(numbers[indexOfS1],0x40+0x0a);
+ 176   5                                              if(indexOfS1 > 5) {
+ 177   6                                                      indexOfS1 = 0; //µ±ÃëµÚ¶þÎ»µ½5ºóÖÃ0
+ 178   6                                                      indexOfM0++;//Ïò·ÖÎ»½øÒ»
+ 179   6                                                      writeData(numbers[indexOfS1],0x40+0x0a);
+C51 COMPILER V9.01   1602_®µ¥Æ¬»_¶¨Ê±Æ÷Ê±_Ó                                                05/09/2012 13:19:54 PAGE 4   
+
+ 180   6                                                      writeData(numbers[indexOfM0],0x40+0x08);
+ 181   6                                                      if(indexOfM0 >= 10) {
+ 182   7                                                              indexOfM0 = 0;//µ±·ÖµÚÒ»Î»µ½9ºóÖÃ0
+ 183   7                                                              indexOfM1++;//µ±·ÖÎ»µÄµÚÒ»Î»Âú9ºó£¬ÏòµÚ¶þÎ»½øÒ» 
+ 184   7                                                              writeData(numbers[indexOfM0],0x40+0x08);
+ 185   7                                                              writeData(numbers[indexOfM1],0x40+0x07);
+ 186   7                                                              if(indexOfM1 > 5) {
+ 187   8                                                                      indexOfM1 = 0; //µ±·ÖµÚ¶þÎ»µ½5ºóÖÃ0
+ 188   8                                                                      indexOfH0++;//ÏòÊ±Î»½øÒ»
+ 189   8                                                                      writeData(numbers[indexOfM1],0x40+0x07);
+ 190   8                                                                      writeData(numbers[indexOfH0],0x40+0x05);
+ 191   8                                                                      if(indexOfH0 >= 10) {
+ 192   9                                                                              indexOfH0 = 0;//µ±Ê±µÚÒ»Î»µ½9ºóÖÃ0
+ 193   9                                                                              if(indexOfH0 ==4 && indexOfH1 == 2) {
+ 194  10                                                                                       indexOfH0 = 0;  //µ±24Ð¡Ê±Ê±È«²¿ÇåÁã
+ 195  10                                                                                       indexOfH1 = 0;
+ 196  10                                                                              }else {
+ 197  10                                                                                      indexOfH1++;//µ±Ê±Î»µÄµÚÒ»Î»Âú9ºó£¬ÏòµÚ¶þÎ»½øÒ» 
+ 198  10                                                                                      writeData(numbers[indexOfH0],0x40+0x05);
+ 199  10                                                                                      writeData(numbers[indexOfH1],0x40+0x04);
+ 200  10                                                                              }                                               
+ 201   9                                                                      }
+ 202   8                                                              }
+ 203   7                                                      }               
+ 204   6                                              }
+ 205   5                                      }
+ 206   4                              }
+ 207   3      
+ 208   3                      }
+ 209   2                }
+ 210   1              
+ 211   1              if(isTimer) { //Èç¹ûÆô¶¯¼ÆÊ±¹¦ÄÜ ÄÇÃ´ÏÔÊ¾Ò»Ì×¶«Î÷
+ 212   2                      if(isStarted && !isStoped) { //Èç¹û¿ªÊ¼ÁË²¢ÇÒÃ»ÓÐÍ£Ö¹¡£ÎÒÃÇ¾Í¿ªÊ¼±ä»¯Êý×Ö
+ 213   3                              if(count2 >= 10) { //ÅÐ¶Ï10ms;
+ 214   4                               indexOfTimerOfMs0++;
+ 215   4                               count2 = 0;
+ 216   4                               if(indexOfTimerOfMs0 >= 10) {
+ 217   5                                      indexOfTimerOfMs0 = 0;
+ 218   5                                       indexOfTimerOfMs1++;
+ 219   5                                      if(indexOfTimerOfMs1 >= 10) { //ÅÐ¶ÏÊ±¼ä¶¼Ò»Ãë
+ 220   6                                              indexOfTimerOfS0++;
+ 221   6                                              indexOfTimerOfMs1 = 0;
+ 222   6                                              if(indexOfTimerOfS0 >= 10) {
+ 223   7                                                      indexOfTimerOfS0 = 0;//µ±ÃëµÚÒ»Î»µ½9ºóÖÃ0
+ 224   7                                                      indexOfTimerOfS1++;//µ±ÃëÎ»µÄµÚÒ»Î»Âú9ºó£¬ÏòµÚ¶þÎ»½øÒ»
+ 225   7                                                      if(indexOfTimerOfS1 > 5) {
+ 226   8                                                              indexOfTimerOfS1 = 0; //µ±ÃëµÚ¶þÎ»µ½5ºóÖÃ0
+ 227   8                                                              indexOfTimerOfM0++;//Ïò·ÖÎ»½øÒ»
+ 228   8                                                              if(indexOfTimerOfM0 >= 10) {
+ 229   9                                                                      indexOfTimerOfM0 = 0;//µ±·ÖµÚÒ»Î»µ½9ºóÖÃ0
+ 230   9                                                                      indexOfTimerOfM1++;//µ±·ÖÎ»µÄµÚÒ»Î»Âú9ºó£¬ÏòµÚ¶þÎ»½øÒ»  
+ 231   9                                                                      if(indexOfTimerOfM1 > 5) {
+ 232  10                                                                              indexOfTimerOfM1 = 0; //µ±·ÖµÚ¶þÎ»µ½5ºóÖÃ0
+ 233  10                                                                              indexOfTimerOfH0++;//ÏòÊ±Î»½øÒ»
+ 234  10                                                                              if(indexOfTimerOfH0 >= 10) {
+ 235  11                                                                                      indexOfTimerOfH0 = 0;//µ±Ê±µÚÒ»Î»µ½9ºóÖÃ0
+ 236  11                                                                                      if(indexOfTimerOfH0 ==4 && indexOfH1 == 2) {
+ 237  12                                                                                               indexOfTimerOfH0 = 0;   //µ±24Ð¡Ê±Ê±È«²¿ÇåÁã
+ 238  12                                                                                               indexOfTimerOfH1 = 0;
+ 239  12                                                                                      }else {
+ 240  12                                                                                              indexOfTimerOfH1++;//µ±Ê±Î»µÄµÚÒ»Î»Âú9ºó£¬ÏòµÚ¶þÎ»½øÒ»  
+ 241  12                                                                                      }                                               
+C51 COMPILER V9.01   1602_®µ¥Æ¬»_¶¨Ê±Æ÷Ê±_Ó                                                05/09/2012 13:19:54 PAGE 5   
+
+ 242  11                                                                              }
+ 243  10                                                                      }
+ 244   9                                                              }               
+ 245   8                                                      }
+ 246   7                                              }
+ 247   6                                      }
+ 248   5                              }
+ 249   4                        }     
+ 250   3                      }
+ 251   2                      //updateLED(indexOfTimerOfMs0, indexOfTimerOfMs1, indexOfTimerOfS0, indexOfTimerOfS1, indexOfTimerOfM0, 
+             -indexOfTimerOfM1, indexOfTimerOfH0, indexOfTimerOfH1);        
+ 252   2      
+ 253   2                      //writeData(''+indexOfTimerOfH1,-1);
+ 254   2                              //ÕâÀï¸üÐÂ
+ 255   2              }else {   //Èç¹ûÊÇÊ±ÖÓÄ£Ê½ ÔòÊÇÏÔÊ¾Ê±ÖÓ
+ 256   2                       //ÕâÀïµÄÊµÏÖ¿ÉÄÜ¾ÍÒªÓÃ´ø²ÎÊýµÄº¯ÊýÀ´×öÁË
+ 257   2                      //updateLED(indexOfMs0, indexOfMs1, indexOfS0, indexOfS1, indexOfM0, indexOfM1, indexOfH0, indexOfH1);
+ 258   2                      //ÕâÀï¸üÐÂ
+ 259   2               }
+ 260   1      
+ 261   1              if(bPress) { //Èç¹û°´¼üµÚÒ»´Î±»°´ÏÂ¡£ÄÇÃ´¿ªÊ¼¼ÆÊ±
+ 262   2                      temp1++;
+ 263   2              }                                                                 
+ 264   1              temp2++;
+ 265   1               
+ 266   1      }
+ 267          
+ 268          
+ 269          void keyInterruptHandle() {
+ 270   1              if(!key1 || !key2 || !key3) {
+ 271   2                      bPress = 1;     
+ 272   2              }
+ 273   1      
+ 274   1              if(temp1 > 15) {        //µ±±»°´ÏÂµÄÊ±¼ä³¬¹ý5ms²Å´¦Àí
+ 275   2                      if(key1 == 0) { //±íÊ¾µÚÒ»¸ö°´¼ü±»°´ÏÂ  ,ÕâÀï¹æ¶¨ÎªÊ±
+ 276   3                              if(isTimer) {
+ 277   4                                       //°´ÏÂ¿ªÊ¼£¬ÔÙ°´Ò»´ÎÍ£Ö¹
+ 278   4                                       if(isStarted) {         
+ 279   5                                              isStoped = 1;
+ 280   5                                              isStarted = 0;
+ 281   5                                       }else {
+ 282   5                                              isStarted = 1;
+ 283   5                                              isStoped = 0;
+ 284   5                                       }
+ 285   4                              }else if(indexOfH0 == 3 && indexOfH1 == 2) { //µ±Ê±¼äÊÇ23Ê±
+ 286   4                                      indexOfH0 = 0;   //È«²¿ÇåÁã
+ 287   4                                      indexOfH1 = 0;
+ 288   4                                      }else if (indexOfH0 >= 9) {
+ 289   4                                              indexOfH0 = 0;
+ 290   4                                              indexOfH1++;    
+ 291   4                                      }else {
+ 292   4                                              indexOfH0++;
+ 293   4                              }       
+ 294   3                         while(!key1);//µÈ´ý°´¼ü±»µ¯Æð
+ 295   3                      }
+ 296   2                      
+ 297   2              if(key2 == 0) { //±íÊ¾µÚÒ»¸ö°´¼ü±»°´ÏÂ £¬ÕâÀï¹æ¶¨Îª·Ö
+ 298   3                      if(isTimer && isStoped) {
+ 299   4                               //     Èç¹ûÊÇtimer ÄÇÃ´ ¼ÆÊ±ÇåÁã
+ 300   4                               indexOfTimerOfMs0 = 0;
+ 301   4                               indexOfTimerOfMs1 = 0;
+ 302   4                               indexOfTimerOfS0 = 0;
+C51 COMPILER V9.01   1602_®µ¥Æ¬»_¶¨Ê±Æ÷Ê±_Ó                                                05/09/2012 13:19:54 PAGE 6   
+
+ 303   4                               indexOfTimerOfS1 = 0;
+ 304   4                               indexOfTimerOfM0 = 0;
+ 305   4                               indexOfTimerOfM1 = 0;
+ 306   4                               indexOfTimerOfH0 = 0;
+ 307   4                               indexOfTimerOfH0 = 0;
+ 308   4      
+ 309   4                      }else if(indexOfM0 >= 9 && indexOfM1 >= 5) {
+ 310   4                              indexOfM0 = 0;
+ 311   4                              indexOfM1       = 0;
+ 312   4                              indexOfH0++;
+ 313   4                              }else if(indexOfM0 >= 9) {
+ 314   4                                      indexOfM0 = 0;
+ 315   4                                      indexOfM1++;
+ 316   4                              }else {
+ 317   4                                      indexOfM0++;
+ 318   4                      }                                                        
+ 319   3                 while(!key2);
+ 320   3              }
+ 321   2              
+ 322   2              //ÕâÀï°´¼ü²»ÄÜÊµÏÖ¼ì²âµÄÖ÷ÒªÔ­ÒòÊÇÓÉÓÚ±»Ð´ÔÚÁËkey2µÄifÓï¾äÖÐ¼äÁË...ÕâÀïÊÇÒ»¸öbug¡£Õâ¸ö°æ±¾ÐÞÕý
+ 323   2              if(key3 == 0) { //±íÊ¾µÚÒ»¸ö°´¼ü±»°´ÏÂ    ÕâÀï¹æ¶¨ÎªÃë
+ 324   3                       //¼ÆÊ±Æ÷´úÂë Õâ¸ö¼üÓÃÀ´³äµ±Ä£Ê½ÇÐ»»¹¦ÄÜ
+ 325   3                       isTimer = !isTimer;
+ 326   3                       while(!key3);
+ 327   3              }
+ 328   2      
+ 329   2              temp1 = 0;
+ 330   2              }
+ 331   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1077    ----
+   CONSTANT SIZE    =     32    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     41    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,155 @@
+C51 COMPILER V9.01   电压表                                                                07/07/2012 14:08:19 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE 电压表
+OBJECT MODULE PLACED IN 电压表.OBJ
+COMPILER INVOKED BY: D:\Keil_51\C51\BIN\C51.EXE 电压表.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          sbit led0 = P2^6;
+   7          sbit led1 = P2^5;
+   8          sbit led2 = P2^4;
+   9          sbit led3 = P2^7;
+  10          
+  11          sbit ADC0832CS = P1^4;
+  12          sbit ADC0832CLK = P1^5;
+  13          sbit ADC0832D0_D1 = P1^6;
+  14          
+  15          //无点
+  16          unsigned char code numbers[10] = {0x5f,0x0a,0x9d,0xd5,0xc6,0xd3,0xdb,0x45,0xdf,0xd7};
+  17          
+  18          //有点
+  19          unsigned char code numbers2[10] = {0x5f,0x0a,0x9d,0xd5,0xc6,0xd3,0xdb,0x45,0xdf,0xd7};
+  20          
+  21          void delay(unsigned int i) { //实现了0.001秒的延时
+  22   1              
+  23   1              unsigned int x,j;
+  24   1              
+  25   1              for(j=0;j<i;j++) {
+  26   2                      for(x=0;x<=148;x++) {
+  27   3                      }       
+  28   2              }
+  29   1      }
+  30          
+  31          uchar ADC0832ReadInfo() {
+  32   1              uchar i = 0;
+  33   1              uchar Value1 = 0;
+  34   1              uchar Value2 = 0;
+  35   1              
+  36   1      
+  37   1              
+  38   1              ADC0832CS = 1;//关掉AD;
+  39   1              ADC0832CLK = 0;
+  40   1              ADC0832D0_D1 = 0;
+  41   1              
+  42   1              ADC0832CS = 0;//开启芯片
+  43   1              
+  44   1              ADC0832D0_D1 = 1;//开始位
+  45   1              ADC0832CLK = 0;
+  46   1              ADC0832CLK = 1;
+  47   1              
+  48   1              ADC0832D0_D1 = 1;//并分/单通首
+  49   1              ADC0832CLK =0;
+  50   1              ADC0832CLK = 1;
+  51   1              
+  52   1              ADC0832D0_D1 = 0;//通首选择位
+  53   1              ADC0832CLK = 0;
+  54   1              ADC0832CLK = 1;
+  55   1              
+C51 COMPILER V9.01   电压表                                                                07/07/2012 14:08:19 PAGE 2   
+
+  56   1              ADC0832D0_D1 = 1;//空闲位
+  57   1              ADC0832CLK = 0;
+  58   1              ADC0832CLK = 1;
+  59   1              
+  60   1              for(i = 0;i <8 ;i++)                    //读第一次数据
+  61   1              {
+  62   2                      ADC0832CLK = 1;
+  63   2                      ADC0832CLK = 0;
+  64   2                      if(ADC0832D0_D1)
+  65   2                      {
+  66   3                              Value1 |= 0x80 >> i;
+  67   3                      }
+  68   2              }
+  69   1              
+  70   1              for(i = 0; i < 8; i++)                  //读第二次数据
+  71   1              {
+  72   2                      if(ADC0832D0_D1)
+  73   2                      {
+  74   3                              Value2 |= 0x01 << i;
+  75   3                      }
+  76   2                      ADC0832CLK = 1;
+  77   2                      ADC0832CLK = 0;
+  78   2              }
+  79   1              
+  80   1              ADC0832CS = 1;                                  //关掉芯片
+  81   1              
+  82   1              if(Value1 == Value2)                    //数据校难
+  83   1              {
+  84   2                      return Value1;
+  85   2              }
+  86   1              else
+  87   1              {
+  88   2                      return 0;
+  89   2              }
+  90   1      }
+  91          
+  92          void main() {
+  93   1              uchar i;
+  94   1              uint r;
+  95   1      
+  96   1              r =  ADC0832ReadInfo() * 215;
+  97   1      
+  98   1              while(1) {
+  99   2                      //显示第一位
+ 100   2                      led0 = 0; 
+ 101   2                      P0 = numbers2[r/10000];
+ 102   2                      delay(4);
+ 103   2                      led0 = 1;
+ 104   2                      //显示第二位
+ 105   2                      led1 = 0;
+ 106   2                      P0 = numbers[r/1000%10];
+ 107   2                      delay(4);
+ 108   2                      led1 = 1;
+ 109   2                      //显示第三位
+ 110   2                      led2 = 0;
+ 111   2                      P0 = numbers[r/100%100%10];
+ 112   2                      delay(4);
+ 113   2                      led2 = 1;
+ 114   2      
+ 115   2                      
+ 116   2                      //显示第四位
+ 117   2                      led3 = 0;
+C51 COMPILER V9.01   电压表                                                                07/07/2012 14:08:19 PAGE 3   
+
+ 118   2                      P0 = numbers[r/10%1000%100%10];
+ 119   2                      delay(4);
+ 120   2                      led3 = 1;
+ 121   2      
+ 122   2                      if(i > 100) {
+ 123   3                              r =  ADC0832ReadInfo()* 215;
+ 124   3                              i = 0;
+ 125   3                      }
+ 126   2                      i++;
+ 127   2              }
+ 128   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    309    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

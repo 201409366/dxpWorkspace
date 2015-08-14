@@ -1,0 +1,171 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/09/2012  22:03:55  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+F:\大学\电路\SOFT\KEIL\C51\BIN\BL51.EXE 用汉字打个广告.obj TO 用汉字打个广告 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  用汉字打个广告.obj (用汉譥打个广告)
+  F:\大学\电路\SOFT\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  F:\大学\电路\SOFT\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  用汉字打个广告 (用汉譥打个广告)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     002BH     UNIT         ?DT?用汉譥打个广告
+            IDATA   0033H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0032H     UNIT         ?C_INITSEG
+            CODE    00C1H     0030H     UNIT         ?PR?MAIN?用汉譥打个广告
+            CODE    00F1H     002AH     UNIT         ?PR?_DELAY?用汉譥打个广告
+            CODE    011BH     0014H     UNIT         ?PR?LCD12864_INIT?用汉譥打个广告
+            CODE    012FH     000EH     UNIT         ?PR?_LCD12864_WRITEDATA?用汉譥打个广告
+            CODE    013DH     000AH     UNIT         ?PR?_LCD12864_WRITECOMMAND?用汉譥打个广告
+
+
+
+OVERLAY MAP OF MODULE:   用汉字打个广告 (用汉譥打个广告)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?用汉譥打个广告
+  +--> ?C_INITSEG
+
+?PR?MAIN?用汉譥打个广告
+  +--> ?PR?LCD12864_INIT?用汉譥打个广告
+  +--> ?PR?_LCD12864_WRITEDATA?用汉譥打个广告
+  +--> ?PR?_LCD12864_WRITECOMMAND?用汉譥打个...
+
+?PR?LCD12864_INIT?用汉譥打个广告
+  +--> ?PR?_LCD12864_WRITECOMMAND?用汉譥打个...
+
+?PR?_LCD12864_WRITECOMMAND?用汉譥打个...
+  +--> ?PR?_DELAY?用汉譥打个广告
+
+?PR?_LCD12864_WRITEDATA?用汉譥打个广告
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/09/2012  22:03:55  PAGE 2
+
+
+  +--> ?PR?_DELAY?用汉譥打个广告
+
+
+
+SYMBOL TABLE OF MODULE:  用汉字打个广告 (用汉譥打个广告)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        用汉譥打个广告
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  B:0090H.0       PUBLIC        lcd12864_e
+  D:0090H         PUBLIC        P1
+  B:0090H.2       PUBLIC        lcd12864_rs
+  D:00B0H         PUBLIC        P3
+  B:0090H.1       PUBLIC        lcd12864_rw
+  D:00A8H         PUBLIC        IE
+  C:013DH         PUBLIC        _lcd12864_writeCommand
+  C:00FBH         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  D:0008H         PUBLIC        name
+  C:00C1H         PUBLIC        main
+  D:0015H         PUBLIC        time
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0133H         PUBLIC        _lcd12864_writeData
+  C:011BH         PUBLIC        lcd12864_init
+  D:0026H         PUBLIC        qq
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          L?0025
+  -------         ENDPROC       L?0025
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        i
+  -------         DO            
+  D:0002H         SYMBOL        x
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:00FBH         LINE#         15
+  C:00FBH         LINE#         19
+  C:0105H         LINE#         20
+  C:0108H         LINE#         21
+  C:0113H         LINE#         22
+  C:011AH         LINE#         23
+  -------         ENDPROC       _DELAY
+  -------         PROC          _LCD12864_WRITECOMMAND
+  D:0007H         SYMBOL        comm
+  C:013DH         LINE#         25
+  C:013DH         LINE#         26
+  C:013FH         LINE#         28
+  C:0141H         LINE#         29
+  C:0141H         LINE#         30
+  C:0141H         LINE#         31
+  C:0141H         LINE#         32
+  C:0144H         LINE#         34
+  C:0146H         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/09/2012  22:03:55  PAGE 3
+
+
+  -------         ENDPROC       _LCD12864_WRITECOMMAND
+  C:012FH         SYMBOL        L?0027
+  -------         PROC          L?0026
+  -------         ENDPROC       L?0026
+  C:012FH         SYMBOL        L?0027
+  -------         PROC          _LCD12864_WRITEDATA
+  D:0007H         SYMBOL        data_
+  C:0133H         LINE#         38
+  C:0133H         LINE#         39
+  C:0135H         LINE#         41
+  C:0137H         LINE#         42
+  C:0137H         LINE#         43
+  C:0137H         LINE#         44
+  C:0137H         LINE#         45
+  C:013AH         LINE#         47
+  C:013CH         LINE#         49
+  -------         ENDPROC       _LCD12864_WRITEDATA
+  -------         PROC          LCD12864_INIT
+  C:011BH         LINE#         51
+  C:011BH         LINE#         52
+  C:0120H         LINE#         53
+  C:0125H         LINE#         54
+  C:012AH         LINE#         55
+  -------         ENDPROC       LCD12864_INIT
+  -------         PROC          MAIN
+  -------         DO            
+  D:0001H         SYMBOL        i
+  -------         ENDDO         
+  C:00C1H         LINE#         58
+  C:00C1H         LINE#         61
+  C:00C4H         LINE#         62
+  C:00C6H         LINE#         63
+  C:00CBH         LINE#         64
+  C:00CFH         LINE#         65
+  C:00D4H         LINE#         66
+  C:00D6H         LINE#         67
+  C:00DBH         LINE#         68
+  C:00DFH         LINE#         69
+  C:00E4H         LINE#         70
+  C:00E6H         LINE#         71
+  C:00EBH         LINE#         72
+  C:00EFH         LINE#         73
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        用汉譥打个广告
+
+Program Size: data=52.0 xdata=0 code=327
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

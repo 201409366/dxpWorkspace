@@ -1,0 +1,73 @@
+C51 COMPILER V9.01   _醇_试                                                              05/09/2012 21:19:46 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE _醇_试
+OBJECT MODULE PLACED IN 按键测试.OBJ
+COMPILER INVOKED BY: F:\大学\电路\soft\Keil\C51\BIN\C51.EXE 按键测试.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          sbit key1 = P3^4;
+   4          sbit key2 = P3^5;
+   5          sbit key3 = P3^6;
+   6          sbit key4 = P3^7;
+   7          
+   8          sbit buzz = P2^3;
+   9          
+  10          void delay (unsigned int time)  {//实现了0.01秒的延时
+  11   1      
+  12   1              unsigned int i,j;
+  13   1      
+  14   1               for(i = 0; i < time; i++) {
+  15   2                      for(j = 0; j < 1872; j++) {
+  16   3                      }
+  17   2               } 
+  18   1      
+  19   1      }
+  20          void main() {
+  21   1      
+  22   1              while(1) {
+  23   2                      if(!key1) {
+  24   3                              buzz = !buzz;
+  25   3                              delay(30);
+  26   3                              buzz = !buzz;
+  27   3                              while(!key1);   
+  28   3                      }
+  29   2                      if(!key2) {
+  30   3                              buzz = !buzz;
+  31   3                              delay(30);
+  32   3                              buzz = !buzz;
+  33   3                              while(!key2);
+  34   3                      }
+  35   2                      if(!key3) {
+  36   3                              buzz = !buzz;
+  37   3                              delay(30);
+  38   3                              buzz = !buzz;
+  39   3                              while(!key3);
+  40   3                      }
+  41   2                      if(!key4) {
+  42   3                              buzz = !buzz;
+  43   3                              delay(30);
+  44   3                              buzz = !buzz;
+  45   3                              while(!key4);
+  46   3                      }
+  47   2              }
+  48   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     84    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.01   _醇_试                                                              05/09/2012 21:19:46 PAGE 2   
+
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

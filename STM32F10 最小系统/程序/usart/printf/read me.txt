@@ -1,0 +1,21 @@
+中断配置
+
+配置管脚
+
+配置串口	
+
+//允许串口中断
+NVIC_Configuration();//中断初始化
+//打开串口中断
+USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+
+
+然后在stm32f10x_it.c 里面写实现代码就可以了
+
+void USART1_IRQHandler(void) {
+	USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+
+	GPIO_SetBits(GPIOF,GPIO_Pin_6);
+
+	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+}

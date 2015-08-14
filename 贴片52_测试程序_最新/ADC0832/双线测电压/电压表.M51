@@ -1,0 +1,210 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/05/2012  21:35:20  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL\C51\BIN\BL51.EXE 电压表.obj TO 电压表 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  电压表.obj (电压表)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+
+
+LINK MAP OF MODULE:  电压表 (电压表)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         _DATA_GROUP_
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008FH     UNIT         ?PR?MAIN?电压表
+            CODE    088FH     0061H     UNIT         ?PR?ADC0832READINFO?电压表
+            CODE    08F0H     0055H     UNIT         ?C?LIB_CODE
+            CODE    0945H     0035H     UNIT         ?PR?_DELAY?电压表
+            CODE    097AH     0014H     UNIT         ?CO?电压表
+            CODE    098EH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   电压表 (电压表)
+
+
+SEGMENT                              DATA_GROUP 
+  +--> CALLED SEGMENT              START    LENGTH
+--------------------------------------------------
+?C_C51STARTUP                      -----    -----
+  +--> ?PR?MAIN?电压表
+
+?PR?MAIN?电压表                    0008H    0003H
+  +--> ?PR?ADC0832READINFO?电压表
+  +--> ?CO?电压表
+  +--> ?PR?_DELAY?电压表
+
+?PR?_DELAY?电压表                  -----    -----
+  +--> ?CO?电压表
+
+
+
+SYMBOL TABLE OF MODULE:  电压表 (电压表)
+
+  VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/05/2012  21:35:20  PAGE 2
+
+
+  ----------------------------------
+
+  -------         MODULE        电压表
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  C:097AH         PUBLIC        numbers
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:095AH         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:088FH         PUBLIC        ADC0832ReadInfo
+  C:0800H         PUBLIC        main
+  B:0090H.4       PUBLIC        ADC0832CS
+  C:0984H         PUBLIC        numbers2
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0090H.6       PUBLIC        ADC0832D0_D1
+  B:00A0H.6       PUBLIC        led0
+  B:00A0H.5       PUBLIC        led1
+  D:00C8H         PUBLIC        T2CON
+  B:00A0H.4       PUBLIC        led2
+  B:00A0H.7       PUBLIC        led3
+  B:0090H.5       PUBLIC        ADC0832CLK
+  D:00D0H         PUBLIC        PSW
+  C:0950H         SYMBOL        L?0030
+  -------         PROC          L?0029
+  -------         ENDPROC       L?0029
+  C:0950H         SYMBOL        L?0030
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        i
+  -------         DO            
+  D:0002H         SYMBOL        x
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:095AH         LINE#         21
+  C:095AH         LINE#         25
+  C:0964H         LINE#         26
+  C:0967H         LINE#         27
+  C:0972H         LINE#         28
+  C:0979H         LINE#         29
+  -------         ENDPROC       _DELAY
+  -------         PROC          ADC0832READINFO
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        Value1
+  D:0005H         SYMBOL        Value2
+  -------         ENDDO         
+  C:088FH         LINE#         31
+  C:088FH         LINE#         32
+  C:0891H         LINE#         33
+  C:0892H         LINE#         34
+  C:0893H         LINE#         38
+  C:0895H         LINE#         39
+  C:0897H         LINE#         40
+  C:0899H         LINE#         42
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/05/2012  21:35:20  PAGE 3
+
+
+  C:089BH         LINE#         44
+  C:089DH         LINE#         45
+  C:089FH         LINE#         46
+  C:08A1H         LINE#         48
+  C:08A3H         LINE#         49
+  C:08A5H         LINE#         50
+  C:08A7H         LINE#         52
+  C:08A9H         LINE#         53
+  C:08ABH         LINE#         54
+  C:08ADH         LINE#         56
+  C:08AFH         LINE#         57
+  C:08B1H         LINE#         58
+  C:08B3H         LINE#         60
+  C:08B3H         LINE#         61
+  C:08B3H         LINE#         62
+  C:08B5H         LINE#         63
+  C:08B7H         LINE#         64
+  C:08BAH         LINE#         65
+  C:08BAH         LINE#         66
+  C:08C7H         LINE#         67
+  C:08C7H         LINE#         68
+  C:08CBH         LINE#         70
+  C:08CDH         LINE#         71
+  C:08CDH         LINE#         72
+  C:08D0H         LINE#         73
+  C:08D0H         LINE#         74
+  C:08DDH         LINE#         75
+  C:08DDH         LINE#         76
+  C:08DFH         LINE#         77
+  C:08E1H         LINE#         78
+  C:08E5H         LINE#         80
+  C:08E7H         LINE#         82
+  C:08EBH         LINE#         83
+  C:08EBH         LINE#         84
+  C:08EDH         LINE#         85
+  C:08EDH         LINE#         87
+  C:08EDH         LINE#         88
+  C:08EFH         LINE#         89
+  C:08EFH         LINE#         90
+  -------         ENDPROC       ADC0832READINFO
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  D:0009H         SYMBOL        r
+  -------         ENDDO         
+  C:0800H         LINE#         92
+  C:0800H         LINE#         96
+  C:080DH         LINE#         98
+  C:080DH         LINE#         100
+  C:080FH         LINE#         101
+  C:0822H         LINE#         102
+  C:0825H         LINE#         103
+  C:0827H         LINE#         105
+  C:0829H         LINE#         106
+  C:0838H         LINE#         107
+  C:083BH         LINE#         108
+  C:083DH         LINE#         110
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/05/2012  21:35:20  PAGE 4
+
+
+  C:083FH         LINE#         111
+  C:085FH         LINE#         112
+  C:0862H         LINE#         113
+  C:0864H         LINE#         115
+  C:0866H         LINE#         116
+  C:086EH         LINE#         117
+  C:0871H         LINE#         118
+  C:0873H         LINE#         120
+  C:087AH         LINE#         121
+  C:0887H         LINE#         122
+  C:088AH         LINE#         123
+  C:088AH         LINE#         124
+  C:088CH         LINE#         125
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        电压表
+
+  -------         MODULE        ?C?UIDIV
+  C:08F0H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0139H BYTE (15%) *
+******************************************************************************
+
+Program Size: data=12.0 xdata=0 code=413
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,37 @@
+C51 COMPILER V9.01   LED                                                                   06/02/2014 14:54:44 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN LED.OBJ
+COMPILER INVOKED BY: E:\Keil\C51\BIN\C51.EXE LED.C BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "led.h"
+   2          #include "reg52.h"
+   3          
+   4          void turnOn (unsigned char no) {
+   5   1              P2 = (~no) & P2;        
+   6   1      }
+   7          
+   8          void turnOff (unsigned char no) {
+   9   1              P2 = no | P2;
+  10   1      }
+  11          
+  12          void toggle (unsigned char no) {
+  13   1              P2 ^= no;
+  14   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     13    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

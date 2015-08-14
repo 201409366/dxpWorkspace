@@ -1,0 +1,3 @@
+#include "usart.c"
+void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct);
+void Usart_Init(void);
